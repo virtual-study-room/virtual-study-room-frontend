@@ -1,0 +1,31 @@
+.slider {
+    width: 100%;
+    max-width: 400px;
+    height: 45px;
+    margin: auto;
+}
+.thumb {
+    cursor: pointer;
+    position: absolute;
+    z-index: 100;
+    background: #ffffff;
+    border: 5px solid #3774ff;
+    border-radius: 100%;
+    display: block;
+    box-shadow: 0 0 2px 0 rgb(0 0 0 / 44%);
+}
+.track {
+    position: relative;
+    background: #ddd;
+}
+.slider .track {
+    top: 20px;
+    height: 4px;
+}
+.slider .thumb {
+    top: 12px;
+    width: 10px;
+    outline: none;
+    height: 10px;
+    line-height: 38px;
+}
