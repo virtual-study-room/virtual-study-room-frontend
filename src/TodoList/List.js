@@ -51,7 +51,8 @@ export default function List(props) {
 
   return (
     <div>
-      <div>{title}</div>
+      <button onClick={props.exitList}>back</button>
+      <div>{title + props.id}</div>
       <div>{renderTasks()}</div>
       <div>{inputArea()}</div>
       <button onClick={clearTasks}>clear</button>

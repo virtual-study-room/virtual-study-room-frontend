@@ -3,15 +3,22 @@ import List from "./List.js";
 
 export default function TodoLists(props) {
   const [lists, setLists] = useState(["123", "456"]);
-  const [titles, setTitles] = useState(["sample 1", "sample 2"]);
+  const [titles, setTitles] = useState(["sample 123", "sample 456"]);
+
+  const [singleView, setSingleView] = useState(false);
+  const [currList, setCurrList] = useState(null);
 
   // TODO: set useEffect for grabbing lists and titles
 
   const gotoList = (id) => {
-    // TODO: change this later to actually go to a new page using react router stuff
-    // TODO: pass in id as a prop!!
+    setCurrList(id);
+    setSingleView(!singleView);
     console.log(id);
-    // <List id="12325" />
+  };
+
+  const exitList = () => {
+    setCurrList(null);
+    setSingleView(!singleView);
   };
 
   const deleteList = (i) => {
@@ -39,10 +46,12 @@ export default function TodoLists(props) {
     ));
   };
 
+  const renderSingleView = () => <List id={currList} exitList={exitList} />;
+
   return (
     <div className="App">
-      {/* <List listid="12325" /> */}
-      {renderLists()}
+      {!singleView && renderLists()}
+      {singleView && renderSingleView(currList)}
     </div>
   );
 }
