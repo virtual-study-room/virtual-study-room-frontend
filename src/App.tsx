@@ -1,11 +1,11 @@
 import React from "react";
-import List from "./TodoList/List.js";
+import TodoLists from "./TodoList/TodoLists.js";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <List listid="12325" />
+      <TodoLists />
     </div>
   );
 }

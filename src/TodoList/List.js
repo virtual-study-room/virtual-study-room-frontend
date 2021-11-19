@@ -6,6 +6,25 @@ export default function List(props) {
   const [tasks, setTasks] = useState(["hi", "htere"]);
   const [input, setInput] = useState("");
 
+  // TODO: set useEffect for grabbing title and tasks using props.id
+
+  const removeTask = (i) => {
+    // TODO: change this later to remove from database
+    console.log(i);
+    let newTasks = [...tasks];
+    newTasks.splice(i, 1);
+    setTasks(newTasks);
+  };
+
+  const addTask = (task) => {
+    // TODO: change this later to add to database
+    setTasks([...tasks, task]);
+    setInput("");
+  };
+
+  // TODO: change this later to clear from database
+  const clearTasks = () => setTasks([]);
+
   const renderTasks = () => {
     return tasks.map((task, index) => (
       <Task
@@ -15,13 +34,6 @@ export default function List(props) {
         key={task + index}
       />
     ));
-  };
-
-  const removeTask = (i) => {
-    console.log(i);
-    let newTasks = [...tasks];
-    newTasks.splice(i, 1);
-    setTasks(newTasks);
   };
 
   const inputArea = () => {
@@ -37,13 +49,6 @@ export default function List(props) {
     );
   };
 
-  const addTask = (task) => {
-    setTasks([...tasks, task]);
-    setInput("");
-  };
-
-  const clearTasks = () => setTasks([]);
-
   return (
     <div>
       <div>{title}</div>
@@ -53,13 +58,3 @@ export default function List(props) {
     </div>
   );
 }
-
-// each line is a component
-// checked or unchecked
-// content
-// delete line (from parent)
-// input space
-// textbox
-// add line
-// clear button
-// are you sure?
