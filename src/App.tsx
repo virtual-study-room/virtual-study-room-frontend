@@ -1,17 +1,22 @@
-import './App.css';
-import { AsmrSlider, Noise } from './asmrSlider';
+import React from "react";
+import { AsmrSlider, Noise } from "./asmrSlider/asmrSlider";
+import TodoLists from "./TodoList/TodoLists";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <p>Rain</p>
-      <AsmrSlider chosenNoise={Noise.Rain}/>
-      <p>Traffic</p>
-      <AsmrSlider chosenNoise={Noise.Traffic}/>
-      <p>River</p>
-      <AsmrSlider chosenNoise={Noise.River} />
-      <p>Boom Boom Pow </p>
-      <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
+      <TodoLists />
+      <div>
+        <p>Rain</p>
+        <AsmrSlider chosenNoise={Noise.Rain} />
+        <p>Traffic</p>
+        <AsmrSlider chosenNoise={Noise.Traffic} />
+        <p>River</p>
+        <AsmrSlider chosenNoise={Noise.River} />
+        <p>Boom Boom Pow </p>
+        <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
+      </div>
     </div>
   );
 }
