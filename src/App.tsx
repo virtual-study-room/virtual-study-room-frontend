@@ -1,11 +1,13 @@
 import React from "react";
 import { AsmrSlider, Noise } from "./asmrSlider/asmrSlider";
 import TodoLists from "./TodoList/TodoLists";
+import ImageUpload from "./ImageUpload/ImageUpload";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
+      <ImageUpload />
       <TodoLists />
       <div>
         <p>Rain</p>
