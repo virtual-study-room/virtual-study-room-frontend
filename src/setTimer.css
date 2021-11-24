@@ -1,0 +1,32 @@
+
+/* Please excuse this absolute garbage css */
+.setTimer {
+    border: 2px solid black;
+    width: 400px;
+    height: 150px;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.row {
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+.time {
+    margin: 0px 20px;
+    background-color: lightgray;
+    padding: 5px;
+    display: inline-block;
+    width: 200px;
+}
+
+.adjust {
+    display: inline-block;
+}
+
+.adjustButton {
+    display: block;
+    width: 25px;
+    height: 25px;
+}
