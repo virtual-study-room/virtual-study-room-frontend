@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './App.css';
-import { AsmrSlider, Noise } from './asmrSlider';
-import SetTimer from './setTimer';
-import Timer from './timer';
+import { AsmrSlider, Noise } from './asmrSlider/asmrSlider';
+import SetTimer from './timer/setTimer';
+import Timer from './timer/timer';
 import TodoLists from "./TodoList/TodoLists";
 import ImageUpload from "./ImageUpload/ImageUpload";
 
