@@ -3,6 +3,8 @@ import './App.css';
 import { AsmrSlider, Noise } from './asmrSlider';
 import SetTimer from './setTimer';
 import Timer from './timer';
+import TodoLists from "./TodoList/TodoLists";
+import ImageUpload from "./ImageUpload/ImageUpload";
 
 function App() {
   let [showSetTimer,setShowSetTimer] = useState(false);
@@ -25,6 +27,8 @@ function App() {
 
   return (
     <div className="App">
+      <ImageUpload />
+      <TodoLists />
       <p>Rain</p>
       <AsmrSlider chosenNoise={Noise.Rain}/>
       <p>Traffic</p>
