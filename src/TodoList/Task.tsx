@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 
-export default function Task(props) {
+interface TaskProps {
+  remove: (index: number) => void;
+  content: string;
+  index: number;
+}
+export default function Task(props: TaskProps) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (

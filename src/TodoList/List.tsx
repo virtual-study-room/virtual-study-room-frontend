@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import Task from "./Task.js";
+import Task from "./Task";
 
-export default function List(props) {
+interface ListProps {
+  exitList: () => void;
+  id: string;
+}
+export default function List(props: ListProps) {
   const [title, setTitle] = useState("sample");
   const [tasks, setTasks] = useState(["hi", "htere"]);
   const [input, setInput] = useState("");
 
   // TODO: set useEffect for grabbing title and tasks using props.id
 
-  const removeTask = (i) => {
+  const removeTask = (i: number) => {
     // TODO: change this later to remove from database
     console.log(i);
     let newTasks = [...tasks];
@@ -16,7 +20,7 @@ export default function List(props) {
     setTasks(newTasks);
   };
 
-  const addTask = (task) => {
+  const addTask = (task: string) => {
     // TODO: change this later to add to database
     setTasks([...tasks, task]);
     setInput("");

@@ -1,6 +1,6 @@
 import React from "react";
-import { AsmrSlider, Noise } from "./asmrSlider";
-import TodoLists from "./TodoList/TodoLists.js";
+import { AsmrSlider, Noise } from "./asmrSlider/asmrSlider";
+import TodoLists from "./TodoList/TodoLists";
 import "./App.css";
 
 function App() {
