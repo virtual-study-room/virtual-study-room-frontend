@@ -1,5 +1,5 @@
 import ReactSlider from 'react-slider';
-import './asmrSlider.css';
+import './styles/asmrSlider.css';
 import Rain from './assets/rain.wav';
 import Traffic from './assets/traffic.mp3';
 import River from './assets/river.wav';
@@ -41,11 +41,11 @@ export function AsmrSlider(props:asmrSliderProps): JSX.Element {
     }
 
     return (
-            <ReactSlider
-            className="slider"
-            thumbClassName="thumb"
-            trackClassName="track"
-            onChange={onChange}
-            />
+        <ReactSlider
+        className="slider"
+        thumbClassName="thumb"
+        trackClassName="track"
+        onChange={onChange}
+        />
     )
 }

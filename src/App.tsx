@@ -1,17 +1,23 @@
-import './App.css';
+import './styles/App.css';
 import { AsmrSlider, Noise } from './asmrSlider';
+import base from './assets/t.jpg';
 
 function App() {
+
   return (
     <div className="App">
-      <p>Rain</p>
-      <AsmrSlider chosenNoise={Noise.Rain}/>
-      <p>Traffic</p>
-      <AsmrSlider chosenNoise={Noise.Traffic}/>
-      <p>River</p>
-      <AsmrSlider chosenNoise={Noise.River} />
-      <p>Boom Boom Pow </p>
-      <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
+      <img id="base" src={base}></img>
+      <div className="asmr-sliders">
+        <div>Rain</div>
+        <AsmrSlider chosenNoise={Noise.Rain}/>
+        <div>Traffic</div>
+        <AsmrSlider chosenNoise={Noise.Traffic}/>
+        <div>River</div>
+        <AsmrSlider chosenNoise={Noise.River} />
+        <div>Music</div>
+        <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
+      </div>
+      
     </div>
   );
 }
