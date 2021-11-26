@@ -6,6 +6,7 @@ interface ListProps {
   id: string;
 }
 export default function List(props: ListProps) {
+  // eslint-disable-next-line
   const [title, setTitle] = useState("sample");
   const [tasks, setTasks] = useState(["hi", "htere"]);
   const [input, setInput] = useState("");
