@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import './setTimer.css';
+import { Link } from "react-router-dom"
 
 interface setTimerProps {
     handleSubmit: (studyTime:[number,number],breakTime:[number,number]) => void
 }
 
 export default function SetTimer(props:setTimerProps): JSX.Element {
-    let [[studyHrs,studyMins],setNewStudy] = useState([0,0]); 
-    let [[breakHrs,breakMins],setNewBreak] = useState([0,0]); 
+    let [[studyHrs,studyMins],setNewStudy] = useState([0,5]); 
+    let [[breakHrs,breakMins],setNewBreak] = useState([0,5]); 
 
     const handleClick = (isStudy:boolean,increment:boolean) => {
-        if (!increment && studyMins === 0 && studyHrs === 0) return;
+        if (!increment && studyMins === 5 && studyHrs === 0) return; //can't go lower than 5 minutes
         if (isStudy) {
             if (increment) {
                 if (studyMins === 55) setNewStudy([studyHrs+1,0]);
@@ -52,7 +53,7 @@ export default function SetTimer(props:setTimerProps): JSX.Element {
                     <button className="adjustButton" onClick={() => handleClick(false,false)}>-</button>
                 </div>
             </div>
-            <button onClick={() => props.handleSubmit([studyHrs,studyMins],[breakHrs,breakMins])}>START</button>
+            <Link to="/main" onClick={() => props.handleSubmit([studyHrs,studyMins],[breakHrs,breakMins])}>START</Link>
         </div>
     )
 }

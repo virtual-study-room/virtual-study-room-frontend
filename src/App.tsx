@@ -6,6 +6,10 @@ import Timer from "./timer/timer";
 import TodoLists from "./TodoList/TodoLists";
 import ImageUpload from "./ImageUpload/ImageUpload";
 import LoginPage from "./auth/LoginPage";
+import Login from "./login/Login";
+import Register from "./register/register";
+import Main from "./main/Main";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { AuthContext, AuthProvider } from "./auth/AuthContext";
 
 function App() {
@@ -17,14 +21,35 @@ function App() {
 }
 
 function AppContent() {
-  const { isValidToken, authToken, logout } = useContext(AuthContext);
-  return isValidToken ? (
-    <div>
-      <button onClick={() => logout()}>Logout</button>
-      <div>Logged In with token: {authToken}!</div>
-    </div>
-  ) : (
-    <LoginPage />
+  //For timer (values need to be here because setTimer is on another page and timer is in main)
+  let [currentStudy, setCurrentStudy] = useState([0, 5]);
+  let [currentBreak, setCurrentBreak] = useState([0, 5]);
+  const handleSubmit = (
+    studyTime: [number, number],
+    breakTime: [number, number]
+  ) => {
+    setCurrentStudy(studyTime);
+    setCurrentBreak(breakTime);
+  };
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/main"
+          element={
+            <Main currentBreak={currentBreak} currentStudy={currentStudy} />
+          }
+        />
+        <Route path="/todo" element={<TodoLists />} />
+        <Route
+          path="/timer"
+          element={<SetTimer handleSubmit={handleSubmit} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
