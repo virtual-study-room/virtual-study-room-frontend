@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../styles/list.css'
 
 interface TaskProps {
   remove: (index: number) => void;
@@ -10,9 +11,11 @@ export default function Task(props: TaskProps) {
 
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
-      <input type="checkbox" onClick={() => setIsChecked(!isChecked)}></input>
-      <div>{props.content}</div>
-      <button onClick={() => props.remove(props.index)}>delete</button>
+      <label className="container">{props.content}
+        <input type="checkbox" onClick={() => setIsChecked(!isChecked)}></input>
+        <span className="checkmark"></span>
+      </label>
+      <button className="close-button list-close" onClick={() => props.remove(props.index)}>X</button>
     </div>
   );
 }

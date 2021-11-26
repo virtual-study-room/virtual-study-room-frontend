@@ -1,10 +1,10 @@
 .App {
   text-align: center;
-  display: flex;
+  /* display: flex; */
   background-color: #c1c7a3;
   height: 100vh;
   width: 100vw;
-  align-items: center;
+  /* align-items: center; */
   /* justify-content: center; */
 }
 
@@ -58,4 +58,13 @@
   grid-template-columns: 1fr 1fr;
   justify-content: center;
   width: 15vw;
+}
+
+.todo-wrapper {
+  /* background-color: red; */
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

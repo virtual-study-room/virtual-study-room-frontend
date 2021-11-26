@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import List from "./List";
+import '../styles/list.css'
 
 export default function TodoLists() {
   const [lists, setLists] = useState(["123", "456"]);
@@ -45,12 +46,13 @@ export default function TodoLists() {
   const renderLists = () => {
     return lists.map((id, i) => (
       <div>
-        <button onClick={() => gotoList(id)} style={{ margin: "10px" }}>
-          <div style={{ height: "200px", width: "200px" }}>{titles[i]}</div>
+        <button className="list-button" onClick={() => gotoList(id)} style={{ margin: "10px" }}>
+          <div className="list-title">{titles[i]}</div>
         </button>
         <button
           onClick={() => deleteList(i)}
-          style={{ position: "relative", right: "45px", top: "10px" }}
+          style={{ position: "relative", right: "45px", top: "-15px" }}
+          className='close-button'
         >
           X
         </button>
@@ -64,21 +66,24 @@ export default function TodoLists() {
         <input
           type="text"
           value={input}
+          className="list-input"
           onChange={(e) => setInput(e.target.value)}
         />
-        <button onClick={() => addList(input)}>submit</button>
-        <button onClick={() => setAddingList(!addingList)}>cancel</button>
+        <button className="submit-button" onClick={() => addList(input)}>submit</button>
+        <button className="submit-button cancel" onClick={() => setAddingList(!addingList)}>cancel</button>
       </div>
     ) : (
-      <button onClick={() => setAddingList(!addingList)}>Add New List</button>
+      <button className="button" onClick={() => setAddingList(!addingList)}>add new list</button>
     );
   };
 
   const renderSingleView = () => <List id={currList} exitList={exitList} />;
 
   return (
-    <div className="App">
-      {!singleView && renderLists()}
+    <div>
+      <div className="lists">
+        {!singleView && renderLists()}
+      </div>
       {!singleView && renderListAdder()}
       {singleView && renderSingleView()}
     </div>

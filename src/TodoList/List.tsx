@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Task from "./Task";
+import '../styles/list.css'
 
 interface ListProps {
   exitList: () => void;
@@ -47,19 +48,20 @@ export default function List(props: ListProps) {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          className = "list-input item-add"
         />
-        <button onClick={() => addTask(input)}>submit</button>
+        <button className="submit-button" onClick={() => addTask(input)}>submit</button>
       </div>
     );
   };
 
   return (
-    <div>
-      <button onClick={props.exitList}>back</button>
-      <div>{title + props.id}</div>
+    <div className="list">
+      <button className="back-button" onClick={props.exitList}>back</button>
+      <div className="list-title-indv">{title + props.id}</div>
       <div>{renderTasks()}</div>
       <div>{inputArea()}</div>
-      <button onClick={clearTasks}>clear</button>
+      <button className="submit-button cancel" onClick={clearTasks}>clear</button>
     </div>
   );
 }
