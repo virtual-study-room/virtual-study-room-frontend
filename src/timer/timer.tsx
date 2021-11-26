@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 interface timerProps {
     time: number[],
-    onClick: () => void,
     onEnd: () => void
 }
 
@@ -38,8 +38,8 @@ export default function Timer(props:timerProps): JSX.Element {
     },[hrs,mins,props,alerting]);
 
     return (
-        <button onClick={props.onClick}>
+        <Link to="/timer">
             {`${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`}
-        </button>
+        </Link>
     );
 }

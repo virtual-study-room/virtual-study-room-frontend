@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import List from "./List";
 
 export default function TodoLists() {
@@ -81,6 +82,7 @@ export default function TodoLists() {
       {!singleView && renderLists()}
       {!singleView && renderListAdder()}
       {singleView && renderSingleView()}
+      <Link to="/main">Exit</Link>
     </div>
   );
 }
