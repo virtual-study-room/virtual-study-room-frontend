@@ -66,9 +66,12 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
       }
 
       //validate token if possible
-      const tokenValidationStatus = await validateToken(storageToken);
+      const validatedToken = await validateToken(storageToken);
       //set valid token to true i
-      if (tokenValidationStatus) {
+      if (validatedToken) {
+        setUser({
+          username: validatedToken,
+        });
         setIsValidToken(true);
       }
     }

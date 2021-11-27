@@ -10,6 +10,7 @@ import Main from "./main/Main";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { AuthContext, AuthProvider } from "./auth/AuthContext";
 
+export const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 //wraps our app with the auth provider
 function App() {
   return (
@@ -47,6 +48,17 @@ function AppContent() {
           path="/timer"
           element={<SetTimer handleSubmit={handleSubmit} />}
         />
+        {/* Default: Main if logged in, or login if not logged in */}
+        <Route
+          path="*"
+          element={
+            isValidToken ? (
+              <Main currentBreak={currentBreak} currentStudy={currentStudy} />
+            ) : (
+              <Login />
+            )
+          }
+        />
       </Routes>
     </BrowserRouter>
   ) : (
@@ -54,6 +66,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="*" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
