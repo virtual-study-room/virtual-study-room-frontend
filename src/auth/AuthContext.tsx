@@ -11,6 +11,7 @@ interface AuthInfo {
   isValidToken: boolean;
   setIsValidToken: React.Dispatch<React.SetStateAction<boolean>>;
   attemptLogin: (username: string, password: string) => void;
+  attemptRegister: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -35,6 +36,11 @@ const defaultAuthContext: AuthInfo = {
   isValidToken: false,
   setIsValidToken: () => {},
   attemptLogin: (username: string, password: string) => {},
+  attemptRegister: (username: string, password: string) => {
+    return new Promise((resolve, reject) => {
+      resolve(false);
+    });
+  },
   logout: () => {},
 };
 
@@ -73,7 +79,7 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
 
   //helper function to attempt signing in
   async function attemptLogin(username: string, password: string) {
-    console.log("Running!");
+    //console.log("Running!");
     const token = await attemptServerLogin(username, password);
     if (!token) {
       alert("Invalid username/password");
@@ -84,8 +90,32 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
     }
   }
 
+  async function attemptRegister(username: string, password: string) {
+    const registerResponse = await fetch(
+      process.env.REACT_APP_SERVER_BASE_URL + "/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      }
+    );
+    if (registerResponse.status !== 200) {
+      alert("Username already taken, please select another one!");
+      return false;
+    } else {
+      alert("Successfully signed up!");
+      return true;
+    }
+  }
+
   function logout() {
     localStorage.removeItem("auth-token");
+    setAuthToken("");
     setIsValidToken(false);
   }
 
@@ -99,6 +129,7 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
         isValidToken,
         setIsValidToken,
         attemptLogin,
+        attemptRegister,
         logout,
       }}
     >

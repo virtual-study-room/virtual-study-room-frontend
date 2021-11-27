@@ -1,17 +1,16 @@
-import { useEffect, useState, useContext } from "react";
-import "./App.css";
-import { AsmrSlider, Noise } from "./asmrSlider/asmrSlider";
+import { useState, useContext } from "react";
+//import { AsmrSlider, Noise } from "./asmrSlider/asmrSlider";
 import SetTimer from "./timer/setTimer";
-import Timer from "./timer/timer";
+//import Timer from "./timer/timer";
 import TodoLists from "./TodoList/TodoLists";
-import ImageUpload from "./ImageUpload/ImageUpload";
-import LoginPage from "./auth/LoginPage";
+//import ImageUpload from "./ImageUpload/ImageUpload";
 import Login from "./login/Login";
 import Register from "./register/register";
 import Main from "./main/Main";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { AuthContext, AuthProvider } from "./auth/AuthContext";
 
+//wraps our app with the auth provider
 function App() {
   return (
     <AuthProvider>
@@ -24,6 +23,7 @@ function AppContent() {
   //For timer (values need to be here because setTimer is on another page and timer is in main)
   let [currentStudy, setCurrentStudy] = useState([0, 5]);
   let [currentBreak, setCurrentBreak] = useState([0, 5]);
+  const { isValidToken } = useContext(AuthContext);
   const handleSubmit = (
     studyTime: [number, number],
     breakTime: [number, number]
@@ -32,13 +32,12 @@ function AppContent() {
     setCurrentBreak(breakTime);
   };
 
-  return (
+  //show main page and todo if logged in, or login/register if not logged in
+  return isValidToken ? (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route
-          path="/main"
+          path="/"
           element={
             <Main currentBreak={currentBreak} currentStudy={currentStudy} />
           }
@@ -48,6 +47,13 @@ function AppContent() {
           path="/timer"
           element={<SetTimer handleSubmit={handleSubmit} />}
         />
+      </Routes>
+    </BrowserRouter>
+  ) : (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
