@@ -87,6 +87,7 @@ export default function TodoLists() {
   };
 
   //function to restore a trashed list
+  //TODO: Use restoreTrashedList
   // eslint-disable-next-line
   async function restoreTrashedList(title: string) {
     const successfulRestore = await attemptRestoreList(title, authToken);
