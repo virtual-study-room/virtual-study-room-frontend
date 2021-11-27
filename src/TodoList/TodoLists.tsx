@@ -1,27 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ObjectId } from "mongoose";
 import { Link } from "react-router-dom";
-import { SERVER_BASE_URL } from "../App";
 import List from "./List";
 import { AuthContext } from "../auth/AuthContext";
-
-export interface ToDoListDocument {
-  userID: string;
-  _id: ObjectId;
-  title: string;
-  date?: Date;
-  trashed?: boolean;
-  items?: string[];
-}
-
-interface AllToDoLists {
-  toDos: ToDoListDocument[];
-}
+import {
+  ToDoListDocument,
+  getUntrashedLists,
+  getTrashedLists,
+  attemptDeleteList,
+  attemptAddList,
+  attemptRestoreList,
+} from "./ToDoListDatabaseUtils";
 
 export default function TodoLists() {
   const { user, authToken } = useContext(AuthContext);
   const [listDocuments, setListDocuments] = useState<ToDoListDocument[]>([]);
-  //const [lists, setLists] = useState(["123", "456"]);
+  const [trashedListDocuments, setTrashedListDocuments] = useState<
+    ToDoListDocument[]
+  >([]);
 
   const [singleView, setSingleView] = useState(false);
   const [currList, setCurrList] = useState("");
@@ -31,14 +26,24 @@ export default function TodoLists() {
   //mapping listDocuments to list titles
   const titles = listDocuments.map((list) => list.title);
 
-  //function to grab updated lists:
+  //mapping trashedListDocuments to list titles
+  // eslint-disable-next-line
+  const trashedTitles = trashedListDocuments.map((list) => list.title);
+
+  //function to grab updated lists: both the trashed and untrashed
   async function grabLists() {
     console.log("Entered!");
     console.log(user);
     if (!user) return;
-    const dbLists = await getAllLists(authToken);
-    console.log("dbLists are: " + dbLists);
-    setListDocuments(dbLists);
+    // const dbLists = await getUntrashedLists(authToken);
+    const dbLists = await Promise.all([
+      getUntrashedLists(authToken),
+      getTrashedLists(authToken),
+    ]);
+    console.log(dbLists);
+    const [untrashedLists, trashedLists] = dbLists;
+    setListDocuments(untrashedLists);
+    setTrashedListDocuments(trashedLists);
   }
   // TODO: set useEffect for grabbing lists and titles
   //useEffect for grabbing lists when mounted or when user loads in
@@ -60,60 +65,38 @@ export default function TodoLists() {
 
   const deleteList = async (title: string) => {
     if (!user) return;
-    const deleteListRes = await fetch(SERVER_BASE_URL + "/trashToDo", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer " + authToken,
-      },
-      body: JSON.stringify({
-        userID: user.username,
-        title: title,
-      }),
-    });
-    if (deleteListRes.status !== 200) {
-      console.log("Error deleting list.");
-      return;
+    const successfulDelete = await attemptDeleteList(title, authToken);
+    if (successfulDelete) {
+      console.log("Successfully deleted list.");
+      await grabLists();
     } else {
-      grabLists();
+      console.log("Error deleting list.");
     }
-
-    // TODO: change this later to remove from database
-    //console.log(i);
-    //let newLists = [...lists];
-    //newLists.splice(i, 1);
-    //setLists(newLists);
   };
 
   const addList = async (title: string) => {
     if (!user) return;
-    const addListRes = await fetch(SERVER_BASE_URL + "/addToDo", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer " + authToken,
-      },
-      //sending a blank list
-      body: JSON.stringify({
-        userID: user.username,
-        title: title,
-        items: [],
-      }),
-    });
-    if (addListRes.status !== 200) {
-      console.log("Error adding list");
-    } else {
-      //update UI once added
+    const successfulAdd = await attemptAddList(title, authToken);
+    if (successfulAdd) {
+      console.log("Successfully added list.");
+      //update UI if successful
       await grabLists();
+    } else {
+      console.log("Error adding list.");
     }
-
-    //let newLists = [...lists];
-    //newLists.push("id-grabbed-from-database?");
-    //setLists(newLists);
-    // let newTitles = [...titles];
-    // newTitles.push(input);
-    //setTitles(newTitles);
   };
+
+  //function to restore a trashed list
+  // eslint-disable-next-line
+  async function restoreTrashedList(title: string) {
+    const successfulRestore = await attemptRestoreList(title, authToken);
+    if (successfulRestore) {
+      console.log("Successfully restored list");
+      await grabLists();
+    } else {
+      console.log("Failure restoring list.");
+    }
+  }
 
   // TODO: move styles to a css file
   const renderLists = () => {
@@ -148,6 +131,8 @@ export default function TodoLists() {
     );
   };
 
+  //TODO: Make a renderTrashedList function, and add in functionality to restore a trashed list
+
   function getCurrentListDoc(id: string) {
     for (let list of listDocuments) {
       if (list.title === id) return list;
@@ -172,21 +157,4 @@ export default function TodoLists() {
       <Link to="/">Exit</Link>
     </div>
   );
-}
-
-async function getAllLists(authToken: string) {
-  const getListRes = await fetch(SERVER_BASE_URL + "/getAllToDos", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: "Bearer " + authToken,
-    },
-  });
-  if (getListRes.status !== 200) {
-    console.log("Error getting lists!");
-    return [];
-  }
-  const listResData: AllToDoLists = await getListRes.json();
-  console.log(listResData.toDos);
-  return listResData.toDos;
 }

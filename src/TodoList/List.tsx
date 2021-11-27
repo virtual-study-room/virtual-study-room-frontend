@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Task from "./Task";
-import { ToDoListDocument } from "../TodoList/TodoLists";
+import { ToDoListDocument } from "../TodoList/ToDoListDatabaseUtils";
 import { SERVER_BASE_URL } from "../App";
 import { AuthContext } from "../auth/AuthContext";
 interface ListProps {

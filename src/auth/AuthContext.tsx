@@ -23,13 +23,8 @@ interface TokenValidationResponse {
   username: string;
 }
 
-const defaultUser: UserProfile = {
-  username: "",
-  bio: "",
-};
-
 const defaultAuthContext: AuthInfo = {
-  user: defaultUser,
+  user: null,
   authToken: "",
   setUser: () => {},
   setAuthToken: () => {},
@@ -73,6 +68,9 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
           username: validatedToken,
         });
         setIsValidToken(true);
+      } else {
+        setUser(null);
+        setIsValidToken(false);
       }
     }
     attemptLocalLogin();
@@ -88,6 +86,9 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
       alert("Invalid username/password");
     } else {
       setAuthToken(token);
+      setUser({
+        username: username,
+      });
       localStorage.setItem("auth-token", token);
       setIsValidToken(true);
     }
@@ -119,6 +120,7 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
   function logout() {
     localStorage.removeItem("auth-token");
     setAuthToken("");
+    setUser(null);
     setIsValidToken(false);
   }
 
