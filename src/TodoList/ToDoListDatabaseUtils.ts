@@ -8,7 +8,7 @@ export interface ToDoListDocument {
   userID: string;
   _id: ObjectId;
   title: string;
-  date?: Date;
+  date: Date;
   trashed?: boolean;
   items?: string[];
 }
