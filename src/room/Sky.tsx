@@ -26,5 +26,12 @@ export default function Sky() {
     return sunset;
   };
 
-  return <img src={image()} width="50px" height="50px" />;
+  return (
+    <img
+      src={image()}
+      width="50px"
+      height="50px"
+      alt="the color of the sky, which changes based on the hour"
+    />
+  );
 }
