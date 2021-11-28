@@ -25,13 +25,6 @@ export default function TodoLists() {
   const [input, setInput] = useState("");
   const [trashView, setTrashView] = useState(false);
 
-  //mapping listDocuments to list titles
-  const titles = listDocuments.map((list) => list.title);
-
-  //mapping trashedListDocuments to list titles
-  // eslint-disable-next-line
-  const trashedTitles = trashedListDocuments.map((list) => list.title);
-
   //function to grab updated lists: both the trashed and untrashed
   async function grabLists() {
     console.log("Entered!");
@@ -109,7 +102,7 @@ export default function TodoLists() {
     return listDocuments.map((list, i) => (
       <div key={list.title}>
         <button onClick={() => gotoList(list.title)} style={{ margin: "10px" }}>
-          <div style={{ height: "200px", width: "200px" }}>{titles[i]}</div>
+          <div style={{ height: "200px", width: "200px" }}>{list.title}</div>
         </button>
         <button
           onClick={() => deleteList(list.title)}
@@ -148,9 +141,7 @@ export default function TodoLists() {
     return trashedListsToShow.map((list, i) => (
       <div key={list.title}>
         <button style={{ margin: "10px" }}>
-          <div style={{ height: "200px", width: "200px" }}>
-            {trashedTitles[i]}
-          </div>
+          <div style={{ height: "200px", width: "200px" }}>{list.title}</div>
         </button>
         <button
           onClick={() => restoreTrashedList(list.title)}
