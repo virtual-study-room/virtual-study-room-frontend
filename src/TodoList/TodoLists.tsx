@@ -10,6 +10,7 @@ import {
   attemptAddList,
   attemptRestoreList,
 } from "./ToDoListDatabaseUtils";
+import "./list.css";
 
 export default function TodoLists() {
   const { user, authToken } = useContext(AuthContext);
@@ -22,6 +23,7 @@ export default function TodoLists() {
   const [currList, setCurrList] = useState("");
   const [addingList, setAddingList] = useState(false);
   const [input, setInput] = useState("");
+  const [trashView, setTrashView] = useState(false);
 
   //mapping listDocuments to list titles
   const titles = listDocuments.map((list) => list.title);
@@ -45,7 +47,7 @@ export default function TodoLists() {
     setListDocuments(untrashedLists);
     setTrashedListDocuments(trashedLists);
   }
-  // TODO: set useEffect for grabbing lists and titles
+
   //useEffect for grabbing lists when mounted or when user loads in
   useEffect(() => {
     grabLists();
@@ -82,7 +84,10 @@ export default function TodoLists() {
       //update UI if successful
       await grabLists();
     } else {
-      console.log("Error adding list.");
+      console.log("Error adding list");
+      alert(
+        "There is a duplicate list title on your account. List titles must be unique!"
+      );
     }
   };
 
@@ -132,7 +137,30 @@ export default function TodoLists() {
     );
   };
 
-  //TODO: Make a renderTrashedList function, and add in functionality to restore a trashed list
+  const renderTrashedLists = () => {
+    const trashedListsToShow = trashedListDocuments // find 5 most recently deleted lists
+      .sort((a, b) => {
+        if (a.date < b.date) return 1;
+        else return -1;
+      })
+      .slice(0, 5);
+
+    return trashedListsToShow.map((list, i) => (
+      <div key={list.title}>
+        <button style={{ margin: "10px" }}>
+          <div style={{ height: "200px", width: "200px" }}>
+            {trashedTitles[i]}
+          </div>
+        </button>
+        <button
+          onClick={() => restoreTrashedList(list.title)}
+          style={{ position: "relative", right: "45px", top: "10px" }}
+        >
+          restore
+        </button>
+      </div>
+    ));
+  };
 
   function getCurrentListDoc(id: string) {
     for (let list of listDocuments) {
@@ -152,8 +180,23 @@ export default function TodoLists() {
 
   return (
     <div className="App">
-      {!singleView && renderLists()}
-      {!singleView && renderListAdder()}
+      <div>
+        <button
+          onClick={() => setTrashView(false)}
+          className={trashView ? "button" : "button-selected"}
+        >
+          Current Lists
+        </button>
+        <button
+          onClick={() => setTrashView(true)}
+          className={trashView ? "button-selected" : "button"}
+        >
+          Deleted Lists
+        </button>
+      </div>
+      {!singleView && !trashView && renderLists()}
+      {!singleView && !trashView && renderListAdder()}
+      {!singleView && trashView && renderTrashedLists()}
       {singleView && renderSingleView()}
       <Link to="/">Exit</Link>
     </div>
