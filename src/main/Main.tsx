@@ -3,6 +3,7 @@ import "./Main.css";
 import { AsmrSlider, Noise } from "../asmrSlider/asmrSlider";
 import Timer from "../timer/timer";
 import ImageUpload from "../ImageUpload/ImageUpload";
+import Sky from "../room/Sky";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext";
 
@@ -24,6 +25,7 @@ function Main(props: mainProps) {
 
   return (
     <div className="Main">
+      <Sky />
       <ImageUpload />
       <p>Rain</p>
       <AsmrSlider chosenNoise={Noise.Rain} />
