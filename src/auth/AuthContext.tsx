@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { SERVER_BASE_URL } from "../App";
 export interface UserProfile {
   username: string;
   bio?: string;
+  phone?: string;
+}
+
+interface UserProfileResponse {
+  user: UserProfile;
 }
 interface AuthInfo {
   user: UserProfile | null;
@@ -57,7 +63,7 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
     async function attemptLocalLogin() {
       const storageToken = localStorage.getItem("auth-token");
       if (!storageToken) return;
-      console.log(storageToken);
+      //console.log(storageToken);
       //exit if no localToken
       if (!storageToken) {
         console.log("No saved token");
@@ -65,12 +71,16 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
       }
 
       //validate token if possible
-      const validatedToken = await validateToken(storageToken);
+      const validatedUser = await validateToken(storageToken);
       //set valid token to true i
-      if (validatedToken) {
-        setUser({
-          username: validatedToken,
-        });
+      //TODO: Add in phone functionality
+      if (validatedUser) {
+        const userProfile = await getUserProfile(validatedUser, storageToken);
+        if (!userProfile) {
+          console.error("Error getting user info!");
+          return;
+        }
+        setUser(userProfile);
         setIsValidToken(true);
       } else {
         setUser(null);
@@ -86,13 +96,17 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
   async function attemptLogin(username: string, password: string) {
     //console.log("Running!");
     const token = await attemptServerLogin(username, password);
+    //TODO: Add in phone functionality
     if (!token) {
       alert("Invalid username/password");
     } else {
+      const userProfile = await getUserProfile(username, token);
+      if (!userProfile) {
+        console.log("Error getting user info!");
+        return;
+      }
+      setUser(userProfile);
       setAuthToken(token);
-      setUser({
-        username: username,
-      });
       localStorage.setItem("auth-token", token);
       setIsValidToken(true);
     }
@@ -162,7 +176,7 @@ async function attemptServerLogin(username: string, password: string) {
     username: username,
     password: password,
   };
-  console.log(account);
+  //console.log(account);
   const loginRes = await fetch(
     process.env.REACT_APP_SERVER_BASE_URL + "/login",
     {
@@ -203,4 +217,22 @@ async function validateToken(authToken: string) {
   }
   const tokenData: TokenValidationResponse = await tokenResponse.json();
   return tokenData.username;
+}
+
+async function getUserProfile(username: string, authToken: string) {
+  const userInfoRes = await fetch(SERVER_BASE_URL + "/getInfo", {
+    method: "GET",
+    headers: {
+      authorization: "Bearer " + authToken,
+    },
+  });
+  if (userInfoRes.status !== 200) {
+    console.log("Error getting profile");
+    return null;
+  } else {
+    const userProfileRes: UserProfileResponse = await userInfoRes.json();
+    const userProfile = userProfileRes.user;
+    //return userProfile if exists
+    return userProfile;
+  }
 }
