@@ -1,25 +1,25 @@
 import './styles/App.css';
-import { AsmrSlider, Noise } from './asmrSlider';
 import base from './assets/t.jpg';
+import { useContext } from "react";
+import { AuthContext, AuthProvider } from "./auth/AuthContext";
+import AuthenticatedRoutes from "./routes/AuthenticatedRoutes";
+import SignInRoutes from "./routes/SignInRoutes";
 
+export const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
+//wraps our app with the auth provider
 function App() {
 
   return (
-    <div className="App">
-      <img id="base" src={base}></img>
-      <div className="asmr-sliders">
-        <div>Rain</div>
-        <AsmrSlider chosenNoise={Noise.Rain}/>
-        <div>Traffic</div>
-        <AsmrSlider chosenNoise={Noise.Traffic}/>
-        <div>River</div>
-        <AsmrSlider chosenNoise={Noise.River} />
-        <div>Music</div>
-        <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
-      </div>
-      
-    </div>
+    <AuthProvider>
+      <AuthenticatedApp />
+    </AuthProvider>
   );
+}
+
+function AuthenticatedApp() {
+  const { isValidToken } = useContext(AuthContext);
+  //show main page and todo if logged in, or login/register if not logged in
+  return isValidToken ? <AuthenticatedRoutes /> : <SignInRoutes />;
 }
 
 export default App;
