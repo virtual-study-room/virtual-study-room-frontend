@@ -4,7 +4,7 @@ import "../styles/App.css";
 import { AsmrSlider, Noise } from "../asmrSlider/asmrSlider";
 import Timer from "../timer/timer";
 import ImageUpload from "../ImageUpload/ImageUpload";
-import Sky from "../room/Sky";
+import Sky from "../sky/Sky";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext";
 import base from '../assets/t.jpg';
@@ -28,10 +28,12 @@ function Main(props: mainProps) {
 
   return (
     <div className="App">
-      <img id="base" src={base}></img>
-      {/* <Sky />
-      <ImageUpload /> */}
-      <Link className="todo-button" to="/todo">Todo lists</Link>
+      {/* <img id="base" src={base}></img> */}
+      <div>
+        <Sky />
+      </div>
+      {/* <ImageUpload /> */}
+      <Link className="todo-button" to="/todo"></Link>
       <button className="button action logout-button" onClick={() => logout()}>Logout</button>
       <div className="asmr-sliders">
         <div>Rain</div>

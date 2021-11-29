@@ -57,7 +57,7 @@
 .asmr-sliders {
   position: absolute;
   bottom: 38%;
-  left: 50%;
+  left: 49%;
   transform: translate(-50%, -50%);
 
   display: grid;
