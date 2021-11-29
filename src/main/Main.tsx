@@ -28,10 +28,7 @@ function Main(props: mainProps) {
 
   return (
     <div className="App">
-      {/* <img id="base" src={base}></img> */}
-      <div>
-        <Sky />
-      </div>
+      <Sky />
       {/* <ImageUpload /> */}
       <Link className="todo-button" to="/todo"></Link>
       <button className="button action logout-button" onClick={() => logout()}>Logout</button>
@@ -46,10 +43,10 @@ function Main(props: mainProps) {
         <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
       </div>
       
-      {/* <Timer
+      <Timer
         time={studyActive ? props.currentStudy : props.currentBreak}
         onEnd={handleEnd}
-      />*/}
+      />
       
     </div>
   );

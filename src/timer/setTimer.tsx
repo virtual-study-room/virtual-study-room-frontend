@@ -35,9 +35,12 @@ export default function SetTimer(props: setTimerProps): JSX.Element {
   };
 
   return (
+    <div className="timer-container">
+    <Link to="/" className="exit">◀</Link>
     <div className="setTimer">
+      
       <div className="row">
-        STUDY
+        <div className="timer-title">study</div>
         <div className="time">
           {`${studyHrs.toString().padStart(2, "0")} hrs ${studyMins
             .toString()
@@ -51,7 +54,7 @@ export default function SetTimer(props: setTimerProps): JSX.Element {
             +
           </button>
           <button
-            className="adjustButton"
+            className="adjustButton action"
             onClick={() => handleClick(true, false)}
           >
             -
@@ -59,7 +62,7 @@ export default function SetTimer(props: setTimerProps): JSX.Element {
         </div>
       </div>
       <div className="row">
-        BREAK
+        <div className="timer-title">break</div>
         <div className="time">
           {`${breakHrs.toString().padStart(2, "0")} hrs ${breakMins
             .toString()
@@ -73,7 +76,7 @@ export default function SetTimer(props: setTimerProps): JSX.Element {
             +
           </button>
           <button
-            className="adjustButton"
+            className="adjustButton action"
             onClick={() => handleClick(false, false)}
           >
             -
@@ -81,6 +84,7 @@ export default function SetTimer(props: setTimerProps): JSX.Element {
         </div>
       </div>
       <Link
+        className="button timer-btn"
         to="/"
         onClick={() =>
           props.handleSubmit([studyHrs, studyMins], [breakHrs, breakMins])
@@ -88,6 +92,7 @@ export default function SetTimer(props: setTimerProps): JSX.Element {
       >
         START
       </Link>
+    </div>
     </div>
   );
 }

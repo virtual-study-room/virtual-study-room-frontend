@@ -1,32 +1,72 @@
+.timer {
+  text-decoration: none;
+  color: black;
+  font-family: handwriting;
+  position: absolute;
+  top: 74.7%;
+  left: 62.5%;
+  transform: translate(-50%, -50%);
+}
 
 /* Please excuse this absolute garbage css */
+.timer-container {
+  background-color: #c0c6a2;
+  /* border: solid 1px green; */
+  height: 100vh;
+  width: 100vw;
+}
+
 .setTimer {
-    border: 2px solid black;
-    width: 400px;
-    height: 150px;
-    margin: auto;
-    margin-top: 10px;
+  /* background-color: blueviolet;
+  border: 2px solid black; */
+  width: fit-content;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  /* margin-top: 10px; */
+  font-family: handwriting;
+  text-transform: lowercase;
 }
 
 .row {
-    font-size: 30px;
-    padding-bottom: 10px;
+  font-size: 30px;
+  padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: 100px 1fr 30px;
+  /* justify-content: center; */
+  align-items: center;
 }
 
 .time {
-    margin: 0px 20px;
-    background-color: lightgray;
-    padding: 5px;
-    display: inline-block;
-    width: 200px;
+  margin: 0px 20px;
+  background-color: #f6e4c0;
+  padding: 5px 20px;
+  border-radius: 5px;
+  height: fit-content;
+  /* display: inline-block; */
+  width: 200px;
 }
 
-.adjust {
-    display: inline-block;
+.timer-btn {
+  position: absolute;
+  /* top: 50%; */
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 .adjustButton {
-    display: block;
-    width: 25px;
-    height: 25px;
+  display: block;
+  width: 25px;
+  height: 25px;
+  font-family: handwriting;
+  font-size: 30px;
+  line-height: 0;
+
+  border-radius: 50%;
+  border: none;
+  background-color: #53b398;
+  margin: 5px;
 }
