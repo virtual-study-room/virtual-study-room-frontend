@@ -1,3 +1,5 @@
+import './styles/App.css';
+import base from './assets/t.jpg';
 import { useContext } from "react";
 import { AuthContext, AuthProvider } from "./auth/AuthContext";
 import AuthenticatedRoutes from "./routes/AuthenticatedRoutes";
@@ -6,6 +8,7 @@ import SignInRoutes from "./routes/SignInRoutes";
 export const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 //wraps our app with the auth provider
 function App() {
+
   return (
     <AuthProvider>
       <AuthenticatedApp />
