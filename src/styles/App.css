@@ -45,17 +45,62 @@
 
 #base {
   position: absolute;
-  left: 20%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   height: 90%;
   border-radius: 1vw;
   border: solid 5px seashell;
 }
 
 .asmr-sliders {
-  position: relative;
-  left: 42%;
+  position: absolute;
+  bottom: 38%;
+  left: 49%;
+  transform: translate(-50%, -50%);
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: center;
   width: 15vw;
+}
+
+@font-face {
+  font-family: handwriting;
+  src: url("../assets/Storytime.ttf");
+}
+
+.input {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 15px;
+  background-color: #53b398;
+  font-family: handwriting;
+  font-size: 25px;
+  text-transform: lowercase;
+  color: black;
+  text-decoration: none;
+  margin: 10px 10px 10px 0;
+}
+
+.action {
+  background-color: #ff7b76 !important;
+}
+
+.exit {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 35px;
+  color: black;
+  text-decoration: none;
 }

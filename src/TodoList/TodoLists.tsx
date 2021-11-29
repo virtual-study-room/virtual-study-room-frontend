@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import List from "./List";
+import "./list.css"
 import { AuthContext } from "../auth/AuthContext";
 import {
   ToDoListDocument,
@@ -114,12 +115,13 @@ export default function TodoLists() {
   const renderLists = () => {
     return listDocuments.map((list, i) => (
       <div key={list.title}>
-        <button onClick={() => gotoList(list.title)} style={{ margin: "10px" }}>
-          <div style={{ height: "200px", width: "200px" }}>{list.title}</div>
+        <button className="list-button" onClick={() => gotoList(list.title)} style={{ margin: "10px" }}>
+          <div className="list-title">{list.title}</div>
         </button>
         <button
           onClick={() => deleteList(list.title, false)}
-          style={{ position: "relative", right: "45px", top: "10px" }}
+          style={{ position: "relative", right: "45px", top: "-15px" }}
+          className='close-button'
         >
           X
         </button>
@@ -130,16 +132,16 @@ export default function TodoLists() {
   const renderListAdder = () => {
     return addingList ? (
       <div>
-        <input
+        <input className="input"
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button onClick={() => addList(input)}>submit</button>
-        <button onClick={() => setAddingList(!addingList)}>cancel</button>
+        <button className="button" onClick={() => addList(input)}>submit</button>
+        <button className="button action" onClick={() => setAddingList(!addingList)}>cancel</button>
       </div>
     ) : (
-      <button onClick={() => setAddingList(!addingList)}>Add New List</button>
+      <button className="button add" onClick={() => setAddingList(!addingList)}>+</button>
     );
   };
 
@@ -153,20 +155,25 @@ export default function TodoLists() {
 
     return trashedListsToShow.map((list, i) => (
       <div key={list.title}>
-        <button style={{ margin: "10px" }}>
-          <div style={{ height: "200px", width: "200px" }}>{list.title}</div>
-        </button>
+        <div>
+          <button className="list-button" style={{ margin: "10px" }}>
+            <div className="list-title">{list.title}</div>
+          </button>
+          <button
+            className='close-button'
+            onClick={() => deleteList(list.title, false)}
+            style={{ position: "relative", right: "45px", top: "-15px" }}
+          >
+            x
+          </button>
+        </div>
+        
         <button
+          className='button restore'
           onClick={() => restoreTrashedList(list.title)}
-          style={{ position: "relative", right: "75px", top: "10px" }}
+          // style={{ position: "relative", left: "0", top: "0" }}
         >
           restore
-        </button>
-        <button
-          onClick={() => deleteList(list.title, false)}
-          style={{ position: "relative", right: "245px", top: "150px" }}
-        >
-          remove
         </button>
       </div>
     ));
@@ -199,28 +206,32 @@ export default function TodoLists() {
 
   return (
     <div className="App">
-      <div>
+      {!singleView && <div className="toggle">
         <button
           onClick={() => setTrashView(false)}
-          className={trashView ? "button" : "button-selected"}
+          className={!trashView ? "button" : "button not-selected"}
         >
           Current Lists
         </button>
         <button
           onClick={() => setTrashView(true)}
-          className={trashView ? "button-selected" : "button"}
+          className={!trashView ? "button not-selected" : "button"}
         >
           Deleted Lists
         </button>
+      </div>}
+      <div className="list-container">
+        {!singleView && !trashView && renderLists()}
+        {!singleView && !trashView && renderListAdder()}
+        {!singleView && trashView && renderTrashedLists()}
+        {!singleView && trashView && (
+          <button className="button action clear" onClick={() => clearTrash()}>🗑️</button>
+        )}
+        {singleView && renderSingleView()}
       </div>
-      {!singleView && !trashView && renderLists()}
-      {!singleView && !trashView && renderListAdder()}
-      {!singleView && trashView && renderTrashedLists()}
-      {!singleView && trashView && (
-        <button onClick={() => clearTrash()}>clear deleted lists</button>
-      )}
-      {singleView && renderSingleView()}
-      <Link to="/">Exit</Link>
+      
+      
+      <Link to="/" className="exit">◀</Link>
     </div>
   );
 }

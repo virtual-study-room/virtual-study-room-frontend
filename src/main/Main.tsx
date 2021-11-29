@@ -1,11 +1,14 @@
 import { useState, useContext } from "react";
 import "./Main.css";
+import "../styles/App.css";
 import { AsmrSlider, Noise } from "../asmrSlider/asmrSlider";
 import Timer from "../timer/timer";
 import ImageUpload from "../ImageUpload/ImageUpload";
-import Sky from "../room/Sky";
+import Sky from "../sky/Sky";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext";
+import base from '../assets/t.jpg';
+
 
 interface mainProps {
   currentStudy: number[];
@@ -24,26 +27,30 @@ function Main(props: mainProps) {
   };
 
   return (
-    <div className="Main">
-      <Sky />
+    <div>
       <ImageUpload />
-      <p>Rain</p>
-      <AsmrSlider chosenNoise={Noise.Rain} />
-      <p>Traffic</p>
-      <AsmrSlider chosenNoise={Noise.Traffic} />
-      <p>River</p>
-      <AsmrSlider chosenNoise={Noise.River} />
-      <p>Boom Boom Pow </p>
-      <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
+    <div className="App">
+      <Sky />
+      
+      <Link className="todo-button" to="/todo"></Link>
+      <button className="button action logout-button" onClick={() => logout()}>Logout</button>
+      <div className="asmr-sliders">
+        <div>Rain</div>
+        <AsmrSlider chosenNoise={Noise.Rain} />
+        <div>Traffic</div>
+        <AsmrSlider chosenNoise={Noise.Traffic} />
+        <div>River</div>
+        <AsmrSlider chosenNoise={Noise.River} />
+        <div>Music </div>
+        <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
+      </div>
+      
       <Timer
         time={studyActive ? props.currentStudy : props.currentBreak}
         onEnd={handleEnd}
       />
-      <br />
-      <Link to="/todo">Todo lists</Link>
-      <div>
-        <button onClick={() => logout()}>Logout</button>
-      </div>
+      
+    </div>
     </div>
   );
 }

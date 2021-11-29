@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../auth/AuthContext";
+import "../login/Login.css"
+import "../styles/App.css"
 
 export default function Register() {
   const { attemptRegister } = useContext(AuthContext);
@@ -105,26 +107,27 @@ export default function Register() {
     );
   }
   return (
-    <div>
+    <div className="login">
+    <div className="login-container">
       <div>
-        <div>Select A Username: </div>
-        <input
+        <div className="login-text">Select A Username: </div>
+        <input className="input"
           type="text"
           value={userInput}
           onChange={(event) => setUserInput(event.target.value)}
         />
       </div>
       <div>
-        <div>Select A Password:</div>
-        <input
+        <div className="login-text">Select A Password:</div>
+        <input className="input"
           type="password"
           value={passwordInput}
           onChange={(event) => setPasswordInput(event.target.value)}
         />
       </div>
       <div>
-        <div>Verify Password:</div>
-        <input
+        <div className="login-text">Verify Password:</div>
+        <input className="input"
           type="password"
           value={verifyPasswordInput}
           onChange={(event) => setVerifyPasswordInput(event.target.value)}
@@ -140,8 +143,8 @@ export default function Register() {
         />
       </div>
       {useNumber && displayPhoneNumberInput()}
-      <button onClick={() => attemptSignUp()}>Sign Up</button>
-      <Link to="/">Log In</Link>
+      <button className="button action" onClick={() => attemptSignUp()}>Sign Up</button>
+      <Link className="button" to="/">Log In</Link>
     </div>
   );
 }

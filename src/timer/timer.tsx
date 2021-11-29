@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
+import "./setTimer.css"
+
 interface timerProps {
     time: number[],
     onEnd: () => void
@@ -38,7 +40,7 @@ export default function Timer(props:timerProps): JSX.Element {
     },[hrs,mins,props,alerting]);
 
     return (
-        <Link to="/timer">
+        <Link className="timer" to="/timer">
             {`${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`}
         </Link>
     );

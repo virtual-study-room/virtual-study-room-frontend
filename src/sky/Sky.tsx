@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import night from "../assets/sky-night.png";
-import sunrise from "../assets/sky-sunrise.png";
-import day from "../assets/sky-day.png";
-import sunset from "../assets/sky-sunset.png";
+import night from "../assets/night.jpg";
+import sunrise from "../assets/sunrise.jpg";
+import day from "../assets/t.jpg";
+import "./sky.css"
 
 export default function Sky() {
   const [date, setDate] = useState(new Date());
@@ -23,14 +23,13 @@ export default function Sky() {
     if (hour >= 19 || hour <= 4) return night;
     if (hour >= 5 && hour <= 6) return sunrise;
     if (hour >= 7 && hour <= 16) return day;
-    return sunset;
+    return sunrise;
   };
 
   return (
     <img
+      id="base"
       src={image()}
-      width="50px"
-      height="50px"
       alt="the color of the sky, which changes based on the hour"
     />
   );
