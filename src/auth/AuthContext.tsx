@@ -5,14 +5,21 @@ export interface UserProfile {
 }
 interface AuthInfo {
   user: UserProfile | null;
-  setUser: React.Dispatch<React.SetStateAction<UserProfile | null>>;
   authToken: string;
-  setAuthToken: React.Dispatch<React.SetStateAction<string>>;
   isValidToken: boolean;
-  setIsValidToken: React.Dispatch<React.SetStateAction<boolean>>;
   attemptLogin: (username: string, password: string) => void;
-  attemptRegister: (username: string, password: string) => Promise<boolean>;
+  attemptRegister: (
+    username: string,
+    password: string,
+    phone?: string
+  ) => Promise<boolean>;
   logout: () => void;
+}
+
+interface RegisterInfo {
+  username: string;
+  password: string;
+  phone?: string;
 }
 
 interface AuthWrapperProps {
@@ -26,12 +33,9 @@ interface TokenValidationResponse {
 const defaultAuthContext: AuthInfo = {
   user: null,
   authToken: "",
-  setUser: () => {},
-  setAuthToken: () => {},
   isValidToken: false,
-  setIsValidToken: () => {},
   attemptLogin: (username: string, password: string) => {},
-  attemptRegister: (username: string, password: string) => {
+  attemptRegister: (username: string, password: string, phone?: string) => {
     return new Promise((resolve, reject) => {
       resolve(false);
     });
@@ -94,7 +98,19 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
     }
   }
 
-  async function attemptRegister(username: string, password: string) {
+  async function attemptRegister(
+    username: string,
+    password: string,
+    phone?: string
+  ) {
+    const reqBody: RegisterInfo = {
+      username: username,
+      password: password,
+    };
+    //
+    if (phone) {
+      reqBody.phone = phone;
+    }
     const registerResponse = await fetch(
       process.env.REACT_APP_SERVER_BASE_URL + "/register",
       {
@@ -102,13 +118,13 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
+        body: JSON.stringify(reqBody),
       }
     );
-    if (registerResponse.status !== 200) {
+    if (registerResponse.status === 401) {
+      alert("Invalid phone number.");
+      return false;
+    } else if (registerResponse.status !== 200) {
       alert("Username already taken, please select another one!");
       return false;
     } else {
@@ -128,11 +144,8 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
     <AuthContext.Provider
       value={{
         authToken,
-        setAuthToken,
         user,
-        setUser,
         isValidToken,
-        setIsValidToken,
         attemptLogin,
         attemptRegister,
         logout,
