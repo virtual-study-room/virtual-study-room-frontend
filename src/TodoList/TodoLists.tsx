@@ -58,14 +58,27 @@ export default function TodoLists() {
     setSingleView(!singleView);
   };
 
-  const deleteList = async (title: string) => {
+  const deleteList = async (title: string, batch: boolean) => {
     if (!user) return;
-    const successfulDelete = await attemptDeleteList(title, authToken);
-    if (successfulDelete) {
-      console.log("Successfully deleted list.");
-      await grabLists();
-    } else {
-      console.log("Error deleting list.");
+    // confirm msg
+    let message = "Are you sure you want to delete this list?";
+    if (trashView) message += " You will not be able to recover it.";
+    if (!batch && window.confirm(message)) {
+      const successfulDelete = await attemptDeleteList(title, authToken);
+      if (successfulDelete) {
+        console.log("Successfully deleted list.");
+        await grabLists();
+      } else {
+        console.log("Error deleting list.");
+      }
+    } else if (batch) {
+      const successfulDelete = await attemptDeleteList(title, authToken);
+      if (successfulDelete) {
+        console.log("Successfully deleted list.");
+        await grabLists();
+      } else {
+        console.log("Error deleting list.");
+      }
     }
   };
 
@@ -105,7 +118,7 @@ export default function TodoLists() {
           <div style={{ height: "200px", width: "200px" }}>{list.title}</div>
         </button>
         <button
-          onClick={() => deleteList(list.title)}
+          onClick={() => deleteList(list.title, false)}
           style={{ position: "relative", right: "45px", top: "10px" }}
         >
           X
@@ -145,12 +158,27 @@ export default function TodoLists() {
         </button>
         <button
           onClick={() => restoreTrashedList(list.title)}
-          style={{ position: "relative", right: "45px", top: "10px" }}
+          style={{ position: "relative", right: "75px", top: "10px" }}
         >
           restore
         </button>
+        <button
+          onClick={() => deleteList(list.title, false)}
+          style={{ position: "relative", right: "245px", top: "150px" }}
+        >
+          remove
+        </button>
       </div>
     ));
+  };
+
+  const clearTrash = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to clear your deleted lists? You will not be able to recover any of them."
+      )
+    )
+      trashedListDocuments.forEach((list) => deleteList(list.title, true));
   };
 
   function getCurrentListDoc(id: string) {
@@ -188,6 +216,9 @@ export default function TodoLists() {
       {!singleView && !trashView && renderLists()}
       {!singleView && !trashView && renderListAdder()}
       {!singleView && trashView && renderTrashedLists()}
+      {!singleView && trashView && (
+        <button onClick={() => clearTrash()}>clear deleted lists</button>
+      )}
       {singleView && renderSingleView()}
       <Link to="/">Exit</Link>
     </div>
