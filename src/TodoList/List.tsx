@@ -3,6 +3,9 @@ import Task from "./Task";
 import { ToDoListDocument } from "../TodoList/ToDoListDatabaseUtils";
 import { SERVER_BASE_URL } from "../App";
 import { AuthContext } from "../auth/AuthContext";
+import "./list.css"
+import "../styles/App.css"
+
 interface ListProps {
   exitList: () => void;
   id: string;
@@ -114,24 +117,24 @@ export default function List(props: ListProps) {
 
   const inputArea = () => {
     return (
-      <div>
-        <input
+      <div id="list-inputArea">
+        <input className="list-input"
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button onClick={() => addTask(input)}>submit</button>
+        <button className="button" onClick={() => addTask(input)}>submit</button>
       </div>
     );
   };
 
   return (
-    <div>
-      <button onClick={props.exitList}>back</button>
-      <div>{props.list.title}</div>
-      <div>{renderTasks()}</div>
+    <div className="card">
+      <button className="back-button" onClick={props.exitList}>all lists</button>
+      <div className="list-title-indv">{props.list.title}</div>
+      <div className="card-tasks">{renderTasks()}</div>
       <div>{inputArea()}</div>
-      <button onClick={clearTasks}>clear</button>
+      <button className="submit-button cancel" onClick={clearTasks}>clear</button>
     </div>
   );
 }

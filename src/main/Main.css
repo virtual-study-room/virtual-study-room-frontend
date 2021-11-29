@@ -1,3 +1,16 @@
 .Main {
   text-align: center;
 }
+
+.logout-button {
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.todo-button {
+  position: relative;
+  left: 36%;
+  top: 30%;
+}

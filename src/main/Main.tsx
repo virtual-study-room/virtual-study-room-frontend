@@ -31,6 +31,8 @@ function Main(props: mainProps) {
       <img id="base" src={base}></img>
       {/* <Sky />
       <ImageUpload /> */}
+      <Link className="todo-button" to="/todo">Todo lists</Link>
+      <button className="button action logout-button" onClick={() => logout()}>Logout</button>
       <div className="asmr-sliders">
         <div>Rain</div>
         <AsmrSlider chosenNoise={Noise.Rain} />
@@ -45,12 +47,8 @@ function Main(props: mainProps) {
       {/* <Timer
         time={studyActive ? props.currentStudy : props.currentBreak}
         onEnd={handleEnd}
-      />
-      <br />
-      <Link to="/todo">Todo lists</Link>
-      <div>
-        <button onClick={() => logout()}>Logout</button>
-      </div> */}
+      />*/}
+      
     </div>
   );
 }

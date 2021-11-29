@@ -45,15 +45,21 @@
 
 #base {
   position: absolute;
-  left: 20%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   height: 90%;
   border-radius: 1vw;
   border: solid 5px seashell;
 }
 
 .asmr-sliders {
-  position: relative;
-  left: 42%;
+  position: absolute;
+  bottom: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: center;
@@ -87,5 +93,5 @@
 }
 
 .action {
-  background-color: #ff7b76;
+  background-color: #ff7b76 !important;
 }
