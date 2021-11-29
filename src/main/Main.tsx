@@ -27,14 +27,17 @@ function Main(props: mainProps) {
     <div className="Main">
       <Sky />
       <ImageUpload />
-      <p>Rain</p>
-      <AsmrSlider chosenNoise={Noise.Rain} />
-      <p>Traffic</p>
-      <AsmrSlider chosenNoise={Noise.Traffic} />
-      <p>River</p>
-      <AsmrSlider chosenNoise={Noise.River} />
-      <p>Boom Boom Pow </p>
-      <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
+      <div className="asmr-sliders">
+        <p>Rain</p>
+        <AsmrSlider chosenNoise={Noise.Rain} />
+        <p>Traffic</p>
+        <AsmrSlider chosenNoise={Noise.Traffic} />
+        <p>River</p>
+        <AsmrSlider chosenNoise={Noise.River} />
+        <p>Boom Boom Pow </p>
+        <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
+      </div>
+      
       <Timer
         time={studyActive ? props.currentStudy : props.currentBreak}
         onEnd={handleEnd}
