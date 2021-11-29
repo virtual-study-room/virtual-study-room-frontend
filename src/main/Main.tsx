@@ -27,9 +27,11 @@ function Main(props: mainProps) {
   };
 
   return (
+    <div>
+      <ImageUpload />
     <div className="App">
       <Sky />
-      {/* <ImageUpload /> */}
+      
       <Link className="todo-button" to="/todo"></Link>
       <button className="button action logout-button" onClick={() => logout()}>Logout</button>
       <div className="asmr-sliders">
@@ -48,6 +50,7 @@ function Main(props: mainProps) {
         onEnd={handleEnd}
       />
       
+    </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ImageUploading, { ImageListType } from "react-images-uploading";
+import "./image.css"
 
 export default function ImageUpload() {
   const [images, setImages] = useState(Array(9).fill(null));
@@ -27,6 +28,9 @@ export default function ImageUpload() {
     setImages(newImages);
   };
 
+  const imageCoords = [[182, 1125], [158, 1203],[277, 1230],[257, 1111],[338, 1112],[349, 1158],[342, 1203],[398, 1210],[403, 1120]]
+  const imageSizes = [[29, 25], [33, 55],[24, 20],[64.5, 47],[19, 24],[20, 24],[48, 24],[22, 24],[63, 46]]
+
   return (
     <div className="image-upload">
       <ImageUploading
@@ -47,19 +51,47 @@ export default function ImageUpload() {
           imageList.map((image, index) => {
             return !imagesState[index] ? (
               <button
-                style={isDragging ? { color: "red" } : undefined}
+                className="image-button"
+                style={
+                  isDragging ? 
+                  { color: "red",
+                    top: imageCoords[index][0],
+                    left: imageCoords[index][1],
+                    width: imageSizes[index][0],
+                    height: imageSizes[index][1]
+                  } : 
+                  {top: imageCoords[index][0],
+                   left: imageCoords[index][1],
+                   width: imageSizes[index][0],
+                   height: imageSizes[index][1],
+                   borderRadius: index === 8 ? '60%': 0
+                  }
+                }
                 onClick={() => onImageUpdate(index)}
                 {...dragProps}
               >
-                Click or Drop here
               </button>
             ) : (
-              <div key={index} className="image-item">
-                <img src={image.dataURL} alt="" width="100" />
-                <div className="image-item__btn-wrapper">
-                  <button onClick={() => onImageUpdate(index)}>Update</button>
-                  <button onClick={() => removeImage(index)}>Remove</button>
-                </div>
+              <div key={index} className="image-item"
+                style={
+                  { 
+                    top: imageCoords[index][0],
+                    left: imageCoords[index][1],
+                    width: imageSizes[index][0],
+                    height: imageSizes[index][1]
+                  }}
+              >
+                <img className="image" src={image.dataURL} alt=""/>
+                {/* <div className="image-item__btn-wrapper"> */}
+                <button className="update-image" style={
+                  { 
+                    width: imageSizes[index][0],
+                    height: imageSizes[index][1]
+                  }}
+                
+                onClick={() => onImageUpdate(index)}></button>
+                <button  className="remove-image" onClick={() => removeImage(index)}>x</button>
+                {/* </div> */}
               </div>
             );
           })
