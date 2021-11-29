@@ -28,7 +28,7 @@ export default function ImageUpload() {
   };
 
   return (
-    <div className="App">
+    <div className="image-upload">
       <ImageUploading
         multiple
         value={images}

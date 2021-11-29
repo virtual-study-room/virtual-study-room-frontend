@@ -1,11 +1,14 @@
 import { useState, useContext } from "react";
 import "./Main.css";
+import "../styles/App.css";
 import { AsmrSlider, Noise } from "../asmrSlider/asmrSlider";
 import Timer from "../timer/timer";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import Sky from "../room/Sky";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext";
+import base from '../assets/t.jpg';
+
 
 interface mainProps {
   currentStudy: number[];
@@ -24,21 +27,22 @@ function Main(props: mainProps) {
   };
 
   return (
-    <div className="Main">
-      <Sky />
-      <ImageUpload />
+    <div className="App">
+      <img id="base" src={base}></img>
+      {/* <Sky />
+      <ImageUpload /> */}
       <div className="asmr-sliders">
-        <p>Rain</p>
+        <div>Rain</div>
         <AsmrSlider chosenNoise={Noise.Rain} />
-        <p>Traffic</p>
+        <div>Traffic</div>
         <AsmrSlider chosenNoise={Noise.Traffic} />
-        <p>River</p>
+        <div>River</div>
         <AsmrSlider chosenNoise={Noise.River} />
-        <p>Boom Boom Pow </p>
+        <div>Music </div>
         <AsmrSlider chosenNoise={Noise.BoomBoomPow} />
       </div>
       
-      <Timer
+      {/* <Timer
         time={studyActive ? props.currentStudy : props.currentBreak}
         onEnd={handleEnd}
       />
@@ -46,7 +50,7 @@ function Main(props: mainProps) {
       <Link to="/todo">Todo lists</Link>
       <div>
         <button onClick={() => logout()}>Logout</button>
-      </div>
+      </div> */}
     </div>
   );
 }
