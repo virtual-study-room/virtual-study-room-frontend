@@ -17,7 +17,7 @@ export default function AuthenticatedRoute() {
     breakTime: [number, number]
   ) => {
     if (user?.phone) {
-      const studyTimeLength = currentStudy[0] * 60 + currentStudy[1];
+      const studyTimeLength = studyTime[0] * 60 + studyTime[1];
       await sendStartStudyMsg(authToken, studyTimeLength);
     }
     setCurrentStudy(studyTime);
