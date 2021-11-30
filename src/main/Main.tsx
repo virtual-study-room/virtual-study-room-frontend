@@ -84,9 +84,7 @@ function Main(props: mainProps) {
   return (
     <div>
       <ImageUpload />
-      <div className="App"
-        style={{backgroundColor: color()}}
-      >
+      <div className="App" style={{ backgroundColor: color() }}>
         <Sky />
 
         <Link className="todo-button" to="/todo"></Link>

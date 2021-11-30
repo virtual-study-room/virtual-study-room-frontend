@@ -12,6 +12,7 @@ export default function Timer(props: timerProps): JSX.Element {
   const [alerting, setAlerting] = useState(false);
 
   const tick = () => {
+    console.log("ticktick");
     if (hrs > 0 && mins === 0) {
       setTime([hrs - 1, 59]);
     } else if (mins > 0) {
@@ -27,9 +28,10 @@ export default function Timer(props: timerProps): JSX.Element {
 
   //change time
   useEffect(() => {
+    console.log("Started ticking!");
     const timerId = setInterval(() => tick(), 60000);
     return () => clearInterval(timerId);
-  });
+  }, []);
 
   //check when time runs out
   useEffect(() => {
