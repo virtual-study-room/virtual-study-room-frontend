@@ -44,11 +44,15 @@ export function TimerProvider({ children }: TimerWrapperProps) {
       const studyTimeLength = studyTime[0] * 60 + studyTime[1];
       await sendStartStudyMsg(authToken, studyTimeLength);
     }
+    localStorage.removeItem(user?.username + " hours");
+    localStorage.removeItem(user?.username + " mins");
     setCurrentStudy(studyTime);
     setCurrentBreak(breakTime);
   };
 
   const handleEnd = () => {
+    localStorage.removeItem(user?.username + " hours");
+    localStorage.removeItem(user?.username + " mins");
     if (studyActive) {
       setTimeout(() => {
         if (user?.phone) {
