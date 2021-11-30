@@ -5,16 +5,21 @@ import Main from "../main/Main";
 import TodoLists from "../TodoList/TodoLists";
 import Login from "../login/Login";
 import SetTimer from "../timer/setTimer";
-
+import { sendStartStudyMsg } from "../main/Main";
 export default function AuthenticatedRoute() {
+  const { user, authToken } = useContext(AuthContext);
   //For timer (values need to be here because setTimer is on another page and timer is in main)
   let [currentStudy, setCurrentStudy] = useState([0, 5]);
   let [currentBreak, setCurrentBreak] = useState([0, 5]);
   const { isValidToken } = useContext(AuthContext);
-  const handleSubmit = (
+  const handleSubmit = async (
     studyTime: [number, number],
     breakTime: [number, number]
   ) => {
+    if (user?.phone) {
+      const studyTimeLength = currentStudy[0] * 60 + currentStudy[1];
+      await sendStartStudyMsg(authToken, studyTimeLength);
+    }
     setCurrentStudy(studyTime);
     setCurrentBreak(breakTime);
   };
