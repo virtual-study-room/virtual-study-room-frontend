@@ -55,7 +55,7 @@ export default function List(props: ListProps) {
 
   const addTask = async (task: string) => {
     if (!props.list || !props.list.items) return;
-    const newTasks = [...props.list?.items, task];
+    const newTasks = [...props.list?.items, [task, false]];
     const editToDoRes = await fetch(SERVER_BASE_URL + "/editToDo", {
       method: "POST",
       headers: {
@@ -78,6 +78,31 @@ export default function List(props: ListProps) {
     // TODO: change this later to add to database
     // setTasks([...tasks, task]);
     // setInput("");
+  };
+
+  const editTask = async (i: number) => {
+    if (!props.list || !props.list.items) return;
+    const newTasks = [...props.list.items];
+    console.log(newTasks);
+    newTasks[i][1] = !newTasks[i][1];
+    const editToDoRes = await fetch(SERVER_BASE_URL + "/editToDo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + authToken,
+      },
+      body: JSON.stringify({
+        title: props.list.title,
+        items: newTasks,
+      }),
+    });
+    if (editToDoRes.status !== 200) {
+      console.log("Error removing task");
+      return;
+    } else {
+      console.log("Updated task state!");
+      props.grabLists();
+    }
   };
 
   // TODO: change this later to clear from database
@@ -109,9 +134,11 @@ export default function List(props: ListProps) {
     return tasks.map((task, index) => (
       <Task
         remove={removeTask}
-        content={task}
+        edit={editTask}
+        content={task[0]}
         index={index}
-        key={task + index}
+        key={task[0] + index}
+        checked={task[1]}
       />
     ));
   };
