@@ -43,29 +43,6 @@
   }
 }
 
-#base {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  height: 90%;
-  border-radius: 1vw;
-  border: solid 5px seashell;
-}
-
-.asmr-sliders {
-  position: absolute;
-  bottom: 38%;
-  left: 49%;
-  transform: translate(-50%, -50%);
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: center;
-  width: 15vw;
-}
-
 @font-face {
   font-family: handwriting;
   src: url("../assets/Storytime.ttf");

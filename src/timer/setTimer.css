@@ -2,10 +2,10 @@
   text-decoration: none;
   color: black;
   font-family: handwriting;
+
   position: absolute;
-  top: 74.7%;
-  left: 62.5%;
-  transform: translate(-50%, -50%);
+  left: calc(50vw + 185px);
+  top: 530px;
 }
 
 /* Please excuse this absolute garbage css */
