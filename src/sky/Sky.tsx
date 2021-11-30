@@ -18,6 +18,7 @@ import "./sky.css"
 
 export default function Sky() {
   const [date, setDate] = useState(new Date());
+  const [lastLogged, setLastLogged] = useState(new Date());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -30,12 +31,29 @@ export default function Sky() {
   }, []);
 
   const hour = date.getHours();
+  var days = date.getTime() - lastLogged.getTime() / (1000 * 3600 * 24);
 
   const image = () => {
-    if (hour >= 19 || hour <= 4) return night;
-    if (hour >= 5 && hour <= 6) return sunrise;
-    if (hour >= 7 && hour <= 16) return day;
-    return sunrise;
+    if (hour >= 19 || hour <= 4){
+      if(days<2) return nightbig;
+      else if (days<5) return nightmed;
+      return nightsmall;
+    } 
+    if (hour >= 5 && hour <= 6) {
+      if(days<2) return sunbig;
+      else if (days<5) return sunmed;
+      return sunsmall;
+    }
+    if (hour >= 7 && hour <= 16) {
+      if(days<2) return daybig;
+      else if (days<5) return daymed;
+      return daysmall;
+    }
+    else {
+      if(days<2) return sunbig;
+      else if (days<5) return sunmed;
+      return sunsmall;
+    }
   };
 
   return (
