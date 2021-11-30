@@ -2,6 +2,10 @@ import React, { useContext, useState } from "react";
 import { SERVER_BASE_URL } from "../App";
 import { AuthContext } from "../auth/AuthContext";
 interface TimerInfo {
+  handleRestore: (
+    studyTime: [number, number],
+    breakTime: [number, number]
+  ) => void;
   handleSubmit: (
     studyTime: [number, number],
     breakTime: [number, number]
@@ -17,6 +21,10 @@ interface TimerWrapperProps {
 }
 
 const defaultTimerContext: TimerInfo = {
+  handleRestore: (
+    studyTime: [number, number],
+    breakTime: [number, number]
+  ) => {},
   handleSubmit: (
     studyTime: [number, number],
     breakTime: [number, number]
@@ -36,6 +44,14 @@ export function TimerProvider({ children }: TimerWrapperProps) {
   const [studyActive, setStudyActive] = useState(true);
 
   //helper functions
+  const handleRestore = async (
+    studyTime: [number, number],
+    breakTime: [number, number]
+  ) => {
+    setCurrentStudy(studyTime);
+    setCurrentBreak(breakTime);
+  };
+
   const handleSubmit = async (
     studyTime: [number, number],
     breakTime: [number, number]
@@ -48,6 +64,8 @@ export function TimerProvider({ children }: TimerWrapperProps) {
     localStorage.removeItem(user?.username + " mins");
     setCurrentStudy(studyTime);
     setCurrentBreak(breakTime);
+    localStorage.setItem(user?.username + " breakTime",breakTime.join(","));
+    localStorage.setItem(user?.username + " studyTime",studyTime.join(","));
   };
 
   const handleEnd = () => {
@@ -77,6 +95,7 @@ export function TimerProvider({ children }: TimerWrapperProps) {
   return (
     <TimerContext.Provider
       value={{
+        handleRestore,
         handleEnd,
         handleSubmit,
         studyActive,
