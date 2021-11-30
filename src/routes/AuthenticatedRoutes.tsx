@@ -8,8 +8,8 @@ import SetTimer from "../timer/setTimer";
 
 export default function AuthenticatedRoute() {
   //For timer (values need to be here because setTimer is on another page and timer is in main)
-  let [currentStudy, setCurrentStudy] = useState([0, 5]);
-  let [currentBreak, setCurrentBreak] = useState([0, 5]);
+  let [currentStudy, setCurrentStudy] = useState([0, -1]);
+  let [currentBreak, setCurrentBreak] = useState([0, -1]);
   const { isValidToken } = useContext(AuthContext);
   const handleSubmit = (
     studyTime: [number, number],
