@@ -4,6 +4,7 @@ export interface UserProfile {
   username: string;
   bio?: string;
   phone?: string;
+  login?: Date;
 }
 
 interface UserProfileResponse {

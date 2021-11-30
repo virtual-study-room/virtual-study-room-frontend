@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import daysmall from "../assets/daysmall.jpg";
 import daymed from "../assets/daymed.jpg";
 import daybig from "../assets/daybig.jpg";
@@ -10,10 +10,12 @@ import nightmed from "../assets/nightmed.jpg";
 import nightbig from "../assets/nightbig.jpg";
 
 import "./sky.css";
+import { AuthContext } from "../auth/AuthContext";
 
 export default function Sky() {
+  const {user} = useContext(AuthContext);
   const [date, setDate] = useState(new Date());
-  const [lastLogged] = useState(new Date());
+  const lastLogged = user?.login;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -26,7 +28,15 @@ export default function Sky() {
   }, []);
 
   const hour = date.getHours();
-  var days = (date.getTime() - lastLogged.getTime()) / (1000 * 3600 * 24);
+  if(!lastLogged){
+    console.error("internal error");
+    return <img
+    id="base"
+    src={daybig}
+    alt="the color of the sky, which changes based on the hour"
+  />
+  }
+  var days = (date.getTime() - new Date(lastLogged).getTime()) / (1000 * 3600 * 24);
 
   const image = () => {
     console.log(days);
