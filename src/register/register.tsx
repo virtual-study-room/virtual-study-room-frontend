@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import "../login/Login.css";
+import "./register.css";
 import "../styles/App.css";
 
 export default function Register() {
@@ -73,31 +74,39 @@ export default function Register() {
 
   function displayPhoneNumberInput() {
     return (
-      <div>
-        <div>Phone Number for Notifications:</div>
-        <span>+</span>
+      <div className="phone-form">
+        <div className="login-text">Phone Number for Notifications:</div>
+        <span className="login-subtext">+</span>
         <input
+          style= {{width: 20}}
+          className="phone-form-input"
           type="text"
           value={countryCode}
           placeholder="#"
           onChange={handleCountryCodeInput}
         />
-        <span>(</span>
+        <span className="login-subtext">(</span>
         <input
+          style= {{width: 50}}
+          className="phone-form-input"
           type="text"
           value={areaCode}
           placeholder="###"
           onChange={handleAreaCodeInput}
         />
-        <span>)</span>
+        <span className="login-subtext">)</span>
         <input
+          style= {{width: 70}}
+          className="phone-form-input"
           type="text"
           value={phoneField1}
           placeholder="###"
           onChange={handlePhoneField1Input}
         />
-        <span>-</span>
+        <span className="login-subtext">-</span>
         <input
+          style= {{width: 70}}
+          className="phone-form-input"
           type="text"
           value={phoneField2}
           placeholder="####"
@@ -136,15 +145,13 @@ export default function Register() {
             onChange={(event) => setVerifyPasswordInput(event.target.value)}
           />
         </div>
-
-        <div>
-          Signup for Text Notifications
-          <input
-            type="checkbox"
-            checked={useNumber}
-            onChange={() => setUseNumber(!useNumber)}
-          />
+        <div className="text-signup">
+          <label className="container">Signup for Text Notifications
+            <input type="checkbox" checked={useNumber} onChange={() => setUseNumber(!useNumber)}></input>
+            <span className="checkmark"></span>
+          </label>
         </div>
+        
         {useNumber && displayPhoneNumberInput()}
         <button className="button action" onClick={() => attemptSignUp()}>
           Sign Up

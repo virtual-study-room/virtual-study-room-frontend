@@ -10,11 +10,35 @@
 }
 
 .todo-button {
-  position: relative;
-  left: 35%;
-  top: 31%;
+  position: absolute;
+  left: calc(50vw - 230px);
+  top: 540px;
+
   height: 80px;
   width: 70px;
   transform: skew(-30deg);
   background-color: none;
+}
+
+#base {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+
+  height: 650px;
+  border-radius: 1vw;
+  border: solid 5px seashell;
+}
+
+.asmr-sliders {
+  position: absolute;
+  top: 360px;
+  left: 49%;
+  transform: translate(-50%, -50%);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  width: 220px;
 }
