@@ -60,7 +60,8 @@ export default function ImageUpload() {
                     top: imageCoords[index][0],
                     left: left,
                     width: imageSizes[index][0],
-                    height: imageSizes[index][1]
+                    height: imageSizes[index][1],
+                    borderRadius: index === 8 ? '60%': 0
                   } : 
                   {top: imageCoords[index][0],
                    left: left,
@@ -80,7 +81,9 @@ export default function ImageUpload() {
                     top: imageCoords[index][0],
                     left: left,
                     width: imageSizes[index][0],
-                    height: imageSizes[index][1]
+                    height: imageSizes[index][1],
+                    borderRadius: index === 8 ? '60%': 0,
+                    overflow: "hidden"
                   }}
               >
                 <img className="image" src={image.dataURL} alt=""/>
@@ -88,7 +91,8 @@ export default function ImageUpload() {
                 <button className="update-image" style={
                   { 
                     width: imageSizes[index][0],
-                    height: imageSizes[index][1]
+                    height: imageSizes[index][1],
+                    // borderRadius: index === 8 ? '60%': 0
                   }}
                 
                 onClick={() => onImageUpdate(index)}></button>
