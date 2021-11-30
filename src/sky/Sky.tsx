@@ -2,6 +2,18 @@ import { useState, useEffect } from "react";
 import night from "../assets/night.jpg";
 import sunrise from "../assets/sunrise.jpg";
 import day from "../assets/t.jpg";
+
+import daysmall from "../assets/daysmall.jpg"
+import daymed from "../assets/daymed.jpg"
+import daybig from "../assets/daybig.jpg"
+import sunsmall from "../assets/sunsmall.jpg"
+import sunmed from "../assets/sunmed.jpg"
+import sunbig from "../assets/sunbig.jpg"
+import nightsmall from "../assets/nightsmall.jpg"
+import nightmed from "../assets/nightmed.jpg"
+import nightbig from "../assets/nightbig.jpg"
+
+
 import "./sky.css"
 
 export default function Sky() {
