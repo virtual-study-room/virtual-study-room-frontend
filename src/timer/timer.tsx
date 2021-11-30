@@ -9,12 +9,11 @@ interface timerProps {
 
 export default function Timer(props: timerProps): JSX.Element {
   const { handleEnd } = useContext(TimerContext);
-  const [time, setTime] = useState<[number, number]>([
+  const [[hrs, mins], setTime] = useState<[number, number]>([
     props.time[0],
     props.time[1],
   ]);
   const [alerting, setAlerting] = useState(false);
-  const [hrs, mins] = time;
 
   const tick = () => {
     console.log("ticktick");
@@ -36,13 +35,10 @@ export default function Timer(props: timerProps): JSX.Element {
   //change time
   useEffect(() => {
     console.log("Started ticking!");
-    const timerId = setInterval(() => tick(), 60000);
+    const timerId = setInterval(() => tick(), 6000);
     return () => clearInterval(timerId);
     // eslint-disable-next-line
-  }, [time]);
-  useEffect(() => {
-    console.log("Refreshing!");
-  });
+  }, [hrs, mins]);
 
   //check when time runs out
   useEffect(() => {
