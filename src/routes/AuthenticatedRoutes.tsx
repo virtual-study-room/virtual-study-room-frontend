@@ -9,8 +9,8 @@ import { sendStartStudyMsg } from "../main/Main";
 export default function AuthenticatedRoute() {
   const { user, authToken } = useContext(AuthContext);
   //For timer (values need to be here because setTimer is on another page and timer is in main)
-  let [currentStudy, setCurrentStudy] = useState([0, 5]);
-  let [currentBreak, setCurrentBreak] = useState([0, 5]);
+  let [currentStudy, setCurrentStudy] = useState([0, -1]);
+  let [currentBreak, setCurrentBreak] = useState([0, -1]);
   const { isValidToken } = useContext(AuthContext);
   const handleSubmit = async (
     studyTime: [number, number],

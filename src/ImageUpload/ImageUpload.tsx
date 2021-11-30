@@ -31,6 +31,7 @@ export default function ImageUpload() {
   const imageCoords = [[182, 1125], [158, 1203],[277, 1230],[257, 1111],[338, 1112],[349, 1158],[342, 1203],[398, 1210],[403, 1120]]
   const imageSizes = [[29, 25], [33, 55],[24, 20],[64.5, 47],[19, 24],[20, 24],[48, 24],[22, 24],[63, 46]]
 
+  
   return (
     <div className="image-upload">
       <ImageUploading
@@ -49,6 +50,7 @@ export default function ImageUpload() {
           dragProps,
         }) =>
           imageList.map((image, index) => {
+            const left = `calc(calc(50vw + ${imageCoords[index][1]}px) - 800px)`
             return !imagesState[index] ? (
               <button
                 className="image-button"
@@ -56,12 +58,13 @@ export default function ImageUpload() {
                   isDragging ? 
                   { color: "red",
                     top: imageCoords[index][0],
-                    left: imageCoords[index][1],
+                    left: left,
                     width: imageSizes[index][0],
-                    height: imageSizes[index][1]
+                    height: imageSizes[index][1],
+                    borderRadius: index === 8 ? '60%': 0
                   } : 
                   {top: imageCoords[index][0],
-                   left: imageCoords[index][1],
+                   left: left,
                    width: imageSizes[index][0],
                    height: imageSizes[index][1],
                    borderRadius: index === 8 ? '60%': 0
@@ -76,9 +79,11 @@ export default function ImageUpload() {
                 style={
                   { 
                     top: imageCoords[index][0],
-                    left: imageCoords[index][1],
+                    left: left,
                     width: imageSizes[index][0],
-                    height: imageSizes[index][1]
+                    height: imageSizes[index][1],
+                    borderRadius: index === 8 ? '60%': 0,
+                    overflow: "hidden"
                   }}
               >
                 <img className="image" src={image.dataURL} alt=""/>
@@ -86,7 +91,8 @@ export default function ImageUpload() {
                 <button className="update-image" style={
                   { 
                     width: imageSizes[index][0],
-                    height: imageSizes[index][1]
+                    height: imageSizes[index][1],
+                    // borderRadius: index === 8 ? '60%': 0
                   }}
                 
                 onClick={() => onImageUpdate(index)}></button>

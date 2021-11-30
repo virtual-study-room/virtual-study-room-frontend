@@ -1,3 +1,13 @@
+# Study Room
+
+Welcome to the Study Room! This is a virtual environment with different tools to help you study:
+* ASMR Audio: Use the sliders to perfect your study space ambient noise. Options range from upbeat music to soothing rain.
+* Time of Day: The color of the room reflects the time of day you log on. There is a night, day, and sunrise/sunset mode.
+* Timer: Based on the Pomodoro method, you can set up a timer that tells you when to study and when to take a break.
+* Photo Wall: Customize your study space with your favorite pictures. Simply click on the picture frames to add your own photos.
+* Plants: Log on often to take care of your plant. If you don't log on, your plant won't grow.
+* To-do Lists: Make and store multiple to-do lists in your study room. You can keep track of deleted lists as well!
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

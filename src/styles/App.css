@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   display: flex;
-  background-color: #c1c7a3;
+  /* background-color: #c1c7a3; */
   height: 100vh;
   width: 100vw;
   align-items: center;
@@ -41,29 +41,6 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-#base {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  height: 90%;
-  border-radius: 1vw;
-  border: solid 5px seashell;
-}
-
-.asmr-sliders {
-  position: absolute;
-  bottom: 38%;
-  left: 49%;
-  transform: translate(-50%, -50%);
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: center;
-  width: 15vw;
 }
 
 @font-face {

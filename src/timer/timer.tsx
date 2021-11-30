@@ -41,7 +41,9 @@ export default function Timer(props: timerProps): JSX.Element {
 
   return (
     <Link className="timer" to="/timer">
-      {`${hrs.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}`}
+      {`${hrs.toString().padStart(2, "0")}:${
+        mins === -1 ? "00" : mins.toString().padStart(2, "0")
+      }`}
     </Link>
   );
 }

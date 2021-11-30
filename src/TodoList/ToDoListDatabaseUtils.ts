@@ -10,7 +10,7 @@ export interface ToDoListDocument {
   title: string;
   date: Date;
   trashed?: boolean;
-  items?: string[];
+  items?: [string, boolean][];
 }
 export async function getUntrashedLists(authToken: string) {
   const getListRes = await fetch(SERVER_BASE_URL + "/getAllToDos", {
