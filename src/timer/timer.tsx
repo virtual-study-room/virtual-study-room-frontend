@@ -9,7 +9,7 @@ interface timerProps {
 }
 
 export default function Timer(props: timerProps): JSX.Element {
-  const { handleEnd, studyActive } = useContext(TimerContext);
+  const { handleEnd } = useContext(TimerContext);
 
   const [[hrs, mins], setTime] = useState<[number, number]>([0,-1]);
   const [alerting, setAlerting] = useState(false);
@@ -23,9 +23,10 @@ export default function Timer(props: timerProps): JSX.Element {
         setTime([newHrs,newMins]);
         console.log([newHrs, newMins])
     } else {
+        setAlerting(false)
         setTime([props.time[0],props.time[1]]);
     }
-  },[user]) //only when mounted or user changes
+  },[user,props.time]) //only when mounted or user changes
 
   const tick = () => {
     console.log("ticktick");
@@ -45,12 +46,12 @@ export default function Timer(props: timerProps): JSX.Element {
   };
 
   //check when chosen time changes
-  useEffect(() => {
-    if (localStorage.getItem(user?.username + " hours") === null) {
-        setAlerting(false)
-        setTime([props.time[0], props.time[1]]);
-    }
-  }, [props.time,user]);
+  // useEffect(() => {
+  //   if (localStorage.getItem(user?.username + " hours") === null) {
+  //       setAlerting(false)
+  //       setTime([props.time[0], props.time[1]]);
+  //   }
+  // }, [props.time,user]);
 
   //change time
   useEffect(() => {
