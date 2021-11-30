@@ -2,9 +2,11 @@
   text-decoration: none;
   color: black;
   font-family: handwriting;
-
+  background-color: white;
+  width: 50px;
   position: absolute;
-  left: calc(50vw + 185px);
+  left: calc(50vw + 177px);
+  border-radius: 5px;
   top: 530px;
 }
 
