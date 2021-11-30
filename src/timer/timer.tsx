@@ -1,22 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./setTimer.css";
+import { TimerContext } from "./TimerContext";
 
 interface timerProps {
   time: number[];
-  onEnd: () => void;
 }
 
 export default function Timer(props: timerProps): JSX.Element {
-  const [[hrs, mins], setTime] = useState([props.time[0], props.time[1]]);
+  const { handleEnd } = useContext(TimerContext);
+  const [time, setTime] = useState<[number, number]>([
+    props.time[0],
+    props.time[1],
+  ]);
   const [alerting, setAlerting] = useState(false);
+  const [hrs, mins] = time;
 
   const tick = () => {
     console.log("ticktick");
+    console.log(`Hours: ${hrs}, Mins: ${mins}`);
     if (hrs > 0 && mins === 0) {
-      setTime([hrs - 1, 59]);
+      setTime(([hrs, mins]) => [hrs - 1, 59]);
     } else if (mins > 0) {
-      setTime([hrs, mins - 1]);
+      //console.log("entered yuh");
+      setTime(([hrs, mins]) => [hrs, mins - 1]);
     }
   };
 
@@ -31,14 +38,19 @@ export default function Timer(props: timerProps): JSX.Element {
     console.log("Started ticking!");
     const timerId = setInterval(() => tick(), 60000);
     return () => clearInterval(timerId);
-  }, []);
+    // eslint-disable-next-line
+  }, [time]);
+  useEffect(() => {
+    console.log("Refreshing!");
+  });
 
   //check when time runs out
   useEffect(() => {
     if (hrs === 0 && mins === 0 && !alerting) {
-      props.onEnd();
+      handleEnd();
       setAlerting(true);
     }
+    // eslint-disable-next-line
   }, [hrs, mins, props, alerting]);
 
   return (

@@ -1,15 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./setTimer.css";
 import { Link } from "react-router-dom";
+import { TimerContext } from "./TimerContext";
 
-interface setTimerProps {
-  handleSubmit: (
-    studyTime: [number, number],
-    breakTime: [number, number]
-  ) => void;
-}
-
-export default function SetTimer(props: setTimerProps): JSX.Element {
+export default function SetTimer(): JSX.Element {
+  const { handleSubmit } = useContext(TimerContext);
   let [[studyHrs, studyMins], setNewStudy] = useState([0, 5]);
   let [[breakHrs, breakMins], setNewBreak] = useState([0, 5]);
 
@@ -88,7 +83,7 @@ export default function SetTimer(props: setTimerProps): JSX.Element {
           className="button timer-btn"
           to="/"
           onClick={() =>
-            props.handleSubmit([studyHrs, studyMins], [breakHrs, breakMins])
+            handleSubmit([studyHrs, studyMins], [breakHrs, breakMins])
           }
         >
           START
