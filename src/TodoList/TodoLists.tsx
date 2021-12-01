@@ -264,8 +264,10 @@ export default function TodoLists() {
     return (
       <div>
         <input
+        id="search"
           type="text"
           value={searchValue}
+          placeholder="Search for a list"
           onChange={(e) => setSearchValue(e.target.value)}
         />
       </div>
@@ -280,10 +282,11 @@ export default function TodoLists() {
         
         {singleView && renderSingleView()}
       </div>
-      {!singleView && !trashView && searchBar()}
+      
       {!singleView && (
         <div className="toggle-container">
         <div className="toggle">
+        {!singleView && !trashView && searchBar()}
           <button
             onClick={() => setTrashView(false)}
             className={!trashView ? "button" : "button not-selected"}
