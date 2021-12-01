@@ -153,7 +153,13 @@ export default function TodoLists() {
             if (e.key === "Enter") addList(input);
           }}
         />
-        <button className="button" onClick={() => addList(input)}>
+        <button
+          className="button"
+          onClick={() => {
+            addList(input);
+            setAddingList(!addingList);
+          }}
+        >
           submit
         </button>
         <button
