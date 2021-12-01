@@ -10,7 +10,13 @@ import { AuthContext } from "../auth/AuthContext";
 import { TimerContext } from "../timer/TimerContext";
 //import base from '../assets/t.jpg';
 
-function Main() {
+interface MainProps {
+  images: any[];
+  setImages: React.Dispatch<React.SetStateAction<any[]>>;
+  imagesState: any[];
+  setImagesState: React.Dispatch<React.SetStateAction<any[]>>;
+}
+function Main(props: MainProps) {
   const { user, logout } = useContext(AuthContext);
   const { studyActive, currentBreak, currentStudy, handleRestore } =
     useContext(TimerContext);
@@ -52,7 +58,12 @@ function Main() {
 
   return (
     <div>
-      <ImageUpload />
+      <ImageUpload
+        images={props.images}
+        setImages={props.setImages}
+        imagesState={props.imagesState}
+        setImagesState={props.setImagesState}
+      />
       <div className="App" style={{ backgroundColor: color() }}>
         <Sky />
 
