@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Main from "../main/Main";
@@ -16,16 +16,43 @@ export default function AuthenticatedRoute() {
 }
 
 function TimedContent() {
+  const [images, setImages] = useState(Array(9).fill(null));
+  const [imagesState, setImagesState] = useState(Array(9).fill(false)); // false if there is no image, true if there is
+
   const { isValidToken } = useContext(AuthContext);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route
+          path="/"
+          element={
+            <Main
+              images={images}
+              setImages={setImages}
+              imagesState={imagesState}
+              setImagesState={setImagesState}
+            />
+          }
+        />
         <Route path="/todo" element={<TodoLists />} />
         <Route path="/timer" element={<SetTimer />} />
         {/* Default: Main if logged in, or login if not logged in */}
-        <Route path="*" element={isValidToken ? <Main /> : <Login />} />
+        <Route
+          path="*"
+          element={
+            isValidToken ? (
+              <Main
+                images={images}
+                setImages={setImages}
+                imagesState={imagesState}
+                setImagesState={setImagesState}
+              />
+            ) : (
+              <Login />
+            )
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
