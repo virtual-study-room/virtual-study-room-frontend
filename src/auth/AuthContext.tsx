@@ -70,11 +70,10 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
   useEffect(() => {
     async function attemptLocalLogin() {
       const storageToken = localStorage.getItem("auth-token");
-      if (!storageToken) return;
-      //console.log(storageToken);
-      //exit if no localToken
+      //exit and warmup serverif no localToken
       if (!storageToken) {
         console.log("No saved token");
+        warmupServer();
         return;
       }
 
@@ -259,4 +258,9 @@ async function getUserProfile(username: string, authToken: string) {
     //return userProfile if exists
     return userProfile;
   }
+}
+
+function warmupServer() {
+  console.log("Warming up server!");
+  fetch(SERVER_BASE_URL + "/");
 }
