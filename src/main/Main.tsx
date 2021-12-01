@@ -12,16 +12,24 @@ import { TimerContext } from "../timer/TimerContext";
 
 function Main() {
   const { user, logout } = useContext(AuthContext);
-  const { studyActive, currentBreak, currentStudy, handleRestore } = useContext(TimerContext);
+  const { studyActive, currentBreak, currentStudy, handleRestore } =
+    useContext(TimerContext);
   // date stuff
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
     if (localStorage.getItem(user?.username + " studyTime") !== null) {
-      console.log("time storage")
-      const oldStudy = localStorage.getItem(user?.username + " studyTime")?.split(",") ?? ["0","-1"];
-      const oldBreak = localStorage.getItem(user?.username + " breakTime")?.split(",") ?? ["0","-1"];
-      handleRestore([parseInt(oldStudy[0]),parseInt(oldStudy[1])],[parseInt(oldBreak[0]),parseInt(oldBreak[1])]);
+      console.log("time storage");
+      const oldStudy = localStorage
+        .getItem(user?.username + " studyTime")
+        ?.split(",") ?? ["0", "-1"];
+      const oldBreak = localStorage
+        .getItem(user?.username + " breakTime")
+        ?.split(",") ?? ["0", "-1"];
+      handleRestore(
+        [parseInt(oldStudy[0]), parseInt(oldStudy[1])],
+        [parseInt(oldBreak[0]), parseInt(oldBreak[1])]
+      );
     }
     const timer = setInterval(() => {
       // update the current date every 15 seconds
@@ -30,7 +38,8 @@ function Main() {
     return () => {
       clearInterval(timer); // clear the timer so that it will stop being called on unmount
     };
-  }, [user,handleRestore]);
+    // eslint-disable-next-line
+  }, [user]);
 
   const hour = date.getHours();
 
