@@ -24,6 +24,7 @@ export default function TodoLists() {
   const [currList, setCurrList] = useState("");
   const [addingList, setAddingList] = useState(false);
   const [input, setInput] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [trashView, setTrashView] = useState(false);
 
   //function to grab updated lists: both the trashed and untrashed
@@ -114,7 +115,13 @@ export default function TodoLists() {
 
   // TODO: move styles to a css file
   const renderLists = () => {
-    return listDocuments.map((list, i) => (
+    let tempListDocuments = [...listDocuments];
+    if (searchValue !== "") {
+      tempListDocuments = tempListDocuments.filter(
+        (l) => l.title.slice(0, searchValue.length) === searchValue
+      );
+    }
+    return tempListDocuments.map((list, i) => (
       <div key={list.title}>
         <button
           className="list-button"
@@ -147,7 +154,13 @@ export default function TodoLists() {
           }}
         />
         <div className="button-container">
-          <button className="button" onClick={() => addList(input)}>
+        <button
+          className="button"
+          onClick={() => {
+            addList(input);
+            setAddingList(!addingList);
+          }}
+        >
           submit
         </button>
         <button
@@ -247,6 +260,17 @@ export default function TodoLists() {
    return "#E59766";
  };
 
+  const searchBar = () => {
+    return (
+      <div>
+        <input
+          type="text"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+      </div>
+    );
+  };
 
   return (
     <div className="todolist-page" style={{backgroundColor: color()}}>
@@ -256,6 +280,7 @@ export default function TodoLists() {
         
         {singleView && renderSingleView()}
       </div>
+      {!singleView && !trashView && searchBar()}
       {!singleView && (
         <div className="toggle-container">
         <div className="toggle">
@@ -271,12 +296,14 @@ export default function TodoLists() {
           >
             Deleted Lists
           </button>
+
+          
           {!singleView && !trashView && renderListAdder()}
           {!singleView && trashView && (
           <button className="button action clear" onClick={() => clearTrash()}>
             🗑️
           </button>
-        )}
+          )}
         </div>
         </div>
       )}

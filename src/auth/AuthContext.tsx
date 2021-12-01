@@ -4,11 +4,18 @@ export interface UserProfile {
   username: string;
   bio?: string;
   phone?: string;
+  login?: Date;
 }
 
 interface UserProfileResponse {
   user: UserProfile;
 }
+
+interface LoginResponse {
+  token: string;
+  prevLogin: Date;
+}
+
 interface AuthInfo {
   user: UserProfile | null;
   authToken: string;
@@ -34,6 +41,7 @@ interface AuthWrapperProps {
 
 interface TokenValidationResponse {
   username: string;
+  prevLogin: Date;
 }
 
 const defaultAuthContext: AuthInfo = {
@@ -75,11 +83,17 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
       //set valid token to true i
       //TODO: Add in phone functionality
       if (validatedUser) {
-        const userProfile = await getUserProfile(validatedUser, storageToken);
+        const username = validatedUser.username;
+        const userProfile = await getUserProfile(username, storageToken);
         if (!userProfile) {
           console.error("Error getting user info!");
           return;
         }
+        //modify user's profile login to the prev login info
+        console.log(validatedUser);
+        const lastLoggedIn = validatedUser.login;
+        userProfile.login = lastLoggedIn;
+        console.log("Making user's last logged in: " + lastLoggedIn);
         setUser(userProfile);
         setIsValidToken(true);
       } else {
@@ -95,20 +109,28 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
   //helper function to attempt signing in
   async function attemptLogin(username: string, password: string) {
     //console.log("Running!");
-    const token = await attemptServerLogin(username, password);
+    localStorage.removeItem(user?.username + " studyTime");
+    localStorage.removeItem(user?.username + " breakTime");
+    const validLoginResponse = await attemptServerLogin(username, password);
     //TODO: Add in phone functionality
-    if (!token) {
+    if (!validLoginResponse) {
       alert("Invalid username/password");
     } else {
+      const token = validLoginResponse.token;
+      const prevLogin = validLoginResponse.prevLogin;
       const userProfile = await getUserProfile(username, token);
       if (!userProfile) {
         console.log("Error getting user info!");
         return;
+      } else {
+        //override the userProfile to the prev login's value
+        userProfile.login = prevLogin;
+        console.log("Making prev login: " + prevLogin);
+        setUser(userProfile);
+        setAuthToken(token);
+        localStorage.setItem("auth-token", token);
+        setIsValidToken(true);
       }
-      setUser(userProfile);
-      setAuthToken(token);
-      localStorage.setItem("auth-token", token);
-      setIsValidToken(true);
     }
   }
 
@@ -192,9 +214,8 @@ async function attemptServerLogin(username: string, password: string) {
   if (loginRes.status !== 200) {
     return "";
   }
-  const loginResData = await loginRes.json();
-  const userToken: string = loginResData.token;
-  return userToken;
+  const loginResData: LoginResponse = await loginRes.json();
+  return loginResData;
 }
 
 async function validateToken(authToken: string) {
@@ -216,7 +237,10 @@ async function validateToken(authToken: string) {
     return "";
   }
   const tokenData: TokenValidationResponse = await tokenResponse.json();
-  return tokenData.username;
+  return {
+    username: tokenData.username,
+    login: tokenData.prevLogin,
+  };
 }
 
 async function getUserProfile(username: string, authToken: string) {

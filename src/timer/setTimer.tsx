@@ -1,15 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./setTimer.css";
 import { Link } from "react-router-dom";
+import { TimerContext } from "./TimerContext";
 
-interface setTimerProps {
-  handleSubmit: (
-    studyTime: [number, number],
-    breakTime: [number, number]
-  ) => void;
-}
-
-export default function SetTimer(props: setTimerProps): JSX.Element {
+export default function SetTimer(): JSX.Element {
+  const { handleSubmit } = useContext(TimerContext);
   let [[studyHrs, studyMins], setNewStudy] = useState([0, 5]);
   let [[breakHrs, breakMins], setNewBreak] = useState([0, 5]);
 
@@ -36,63 +31,64 @@ export default function SetTimer(props: setTimerProps): JSX.Element {
 
   return (
     <div className="timer-container">
-    <Link to="/" className="exit">◀</Link>
-    <div className="setTimer">
-      
-      <div className="row">
-        <div className="timer-title">study</div>
-        <div className="time">
-          {`${studyHrs.toString().padStart(2, "0")} hrs ${studyMins
-            .toString()
-            .padStart(2, "0")} mins`}
-        </div>
-        <div className="adjust">
-          <button
-            className="adjustButton"
-            onClick={() => handleClick(true, true)}
-          >
-            +
-          </button>
-          <button
-            className="adjustButton action"
-            onClick={() => handleClick(true, false)}
-          >
-            -
-          </button>
-        </div>
-      </div>
-      <div className="row">
-        <div className="timer-title">break</div>
-        <div className="time">
-          {`${breakHrs.toString().padStart(2, "0")} hrs ${breakMins
-            .toString()
-            .padStart(2, "0")} mins`}
-        </div>
-        <div className="adjust">
-          <button
-            className="adjustButton"
-            onClick={() => handleClick(false, true)}
-          >
-            +
-          </button>
-          <button
-            className="adjustButton action"
-            onClick={() => handleClick(false, false)}
-          >
-            -
-          </button>
-        </div>
-      </div>
-      <Link
-        className="button timer-btn"
-        to="/"
-        onClick={() =>
-          props.handleSubmit([studyHrs, studyMins], [breakHrs, breakMins])
-        }
-      >
-        START
+      <Link to="/" className="exit">
+        ◀
       </Link>
-    </div>
+      <div className="setTimer">
+        <div className="row">
+          <div className="timer-title">study</div>
+          <div className="time">
+            {`${studyHrs.toString().padStart(2, "0")} hrs ${studyMins
+              .toString()
+              .padStart(2, "0")} mins`}
+          </div>
+          <div className="adjust">
+            <button
+              className="adjustButton"
+              onClick={() => handleClick(true, true)}
+            >
+              +
+            </button>
+            <button
+              className="adjustButton action"
+              onClick={() => handleClick(true, false)}
+            >
+              -
+            </button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="timer-title">break</div>
+          <div className="time">
+            {`${breakHrs.toString().padStart(2, "0")} hrs ${breakMins
+              .toString()
+              .padStart(2, "0")} mins`}
+          </div>
+          <div className="adjust">
+            <button
+              className="adjustButton"
+              onClick={() => handleClick(false, true)}
+            >
+              +
+            </button>
+            <button
+              className="adjustButton action"
+              onClick={() => handleClick(false, false)}
+            >
+              -
+            </button>
+          </div>
+        </div>
+        <Link
+          className="button timer-btn"
+          to="/"
+          onClick={() =>
+            handleSubmit([studyHrs, studyMins], [breakHrs, breakMins])
+          }
+        >
+          START
+        </Link>
+      </div>
     </div>
   );
 }
