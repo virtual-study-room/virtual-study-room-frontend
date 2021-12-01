@@ -96,6 +96,8 @@ export const AuthProvider = ({ children }: AuthWrapperProps) => {
   //helper function to attempt signing in
   async function attemptLogin(username: string, password: string) {
     //console.log("Running!");
+    localStorage.removeItem(user?.username + " studyTime");
+    localStorage.removeItem(user?.username + " breakTime");
     const token = await attemptServerLogin(username, password);
     //TODO: Add in phone functionality
     if (!token) {

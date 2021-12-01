@@ -11,12 +11,18 @@ import { TimerContext } from "../timer/TimerContext";
 //import base from '../assets/t.jpg';
 
 function Main() {
-  const { logout } = useContext(AuthContext);
-  const { studyActive, currentBreak, currentStudy } = useContext(TimerContext);
+  const { user, logout } = useContext(AuthContext);
+  const { studyActive, currentBreak, currentStudy, handleRestore } = useContext(TimerContext);
   // date stuff
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
+    if (localStorage.getItem(user?.username + " studyTime") !== null) {
+      console.log("time storage")
+      const oldStudy = localStorage.getItem(user?.username + " studyTime")?.split(",") ?? ["0","-1"];
+      const oldBreak = localStorage.getItem(user?.username + " breakTime")?.split(",") ?? ["0","-1"];
+      handleRestore([parseInt(oldStudy[0]),parseInt(oldStudy[1])],[parseInt(oldBreak[0]),parseInt(oldBreak[1])]);
+    }
     const timer = setInterval(() => {
       // update the current date every 15 seconds
       setDate(new Date());
@@ -24,7 +30,7 @@ function Main() {
     return () => {
       clearInterval(timer); // clear the timer so that it will stop being called on unmount
     };
-  }, []);
+  }, [user,handleRestore]);
 
   const hour = date.getHours();
 
