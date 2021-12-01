@@ -122,17 +122,12 @@ export default function TodoLists() {
       );
     }
     return tempListDocuments.map((list, i) => (
-      <div key={list.title}>
-        <button
-          className="list-button"
-          onClick={() => gotoList(list.title)}
-          style={{ margin: "10px" }}
-        >
+      <div className="todolist" key={list.title}>
+        <button className="list-button" onClick={() => gotoList(list.title)}>
           <div className="list-title">{list.title}</div>
         </button>
         <button
           onClick={() => deleteList(list.title, false)}
-          style={{ position: "relative", right: "45px", top: "-15px" }}
           className="close-button"
         >
           X
@@ -154,23 +149,22 @@ export default function TodoLists() {
           }}
         />
         <div className="button-container">
-        <button
-          className="button"
-          onClick={() => {
-            addList(input);
-            setAddingList(!addingList);
-          }}
-        >
-          submit
-        </button>
-        <button
-          className="button action"
-          onClick={() => setAddingList(!addingList)}
-        >
-          cancel
-        </button>
+          <button
+            className="button"
+            onClick={() => {
+              addList(input);
+              setAddingList(!addingList);
+            }}
+          >
+            submit
+          </button>
+          <button
+            className="button action"
+            onClick={() => setAddingList(!addingList)}
+          >
+            cancel
+          </button>
         </div>
-        
       </div>
     ) : (
       <button className="button add" onClick={() => setAddingList(!addingList)}>
@@ -238,33 +232,33 @@ export default function TodoLists() {
     />
   );
 
- // date stuff
- const [date, setDate] = useState(new Date());
+  // date stuff
+  const [date, setDate] = useState(new Date());
 
- useEffect(() => {
-   const timer = setInterval(() => {
-     // update the current date every 15 seconds
-     setDate(new Date());
-   }, 15 * 1000);
-   return () => {
-     clearInterval(timer); // clear the timer so that it will stop being called on unmount
-   };
- }, []);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      // update the current date every 15 seconds
+      setDate(new Date());
+    }, 15 * 1000);
+    return () => {
+      clearInterval(timer); // clear the timer so that it will stop being called on unmount
+    };
+  }, []);
 
- const hour = date.getHours();
+  const hour = date.getHours();
 
- const color = () => {
-   if (hour >= 19 || hour <= 4) return "#90A5C2";
-   if (hour >= 5 && hour <= 6) return "#E59766";
-   if (hour >= 7 && hour <= 16) return "#C1C7A3";
-   return "#E59766";
- };
+  const color = () => {
+    if (hour >= 19 || hour <= 4) return "#90A5C2";
+    if (hour >= 5 && hour <= 6) return "#E59766";
+    if (hour >= 7 && hour <= 16) return "#C1C7A3";
+    return "#E59766";
+  };
 
   const searchBar = () => {
     return (
       <div>
         <input
-        id="search"
+          id="search"
           type="text"
           value={searchValue}
           placeholder="Search for a list"
@@ -275,39 +269,41 @@ export default function TodoLists() {
   };
 
   return (
-    <div className="todolist-page" style={{backgroundColor: color()}}>
+    <div className="todolist-page" style={{ backgroundColor: color() }}>
       <div className="list-container">
         {!singleView && !trashView && renderLists()}
         {!singleView && trashView && renderTrashedLists()}
-        
+
         {singleView && renderSingleView()}
       </div>
-      
+
       {!singleView && (
         <div className="toggle-container">
-        <div className="toggle">
-        {!singleView && !trashView && searchBar()}
-          <button
-            onClick={() => setTrashView(false)}
-            className={!trashView ? "button" : "button not-selected"}
-          >
-            Current Lists
-          </button>
-          <button
-            onClick={() => setTrashView(true)}
-            className={!trashView ? "button not-selected" : "button"}
-          >
-            Deleted Lists
-          </button>
+          <div className="toggle">
+            {!singleView && !trashView && searchBar()}
+            <button
+              onClick={() => setTrashView(false)}
+              className={!trashView ? "button" : "button not-selected"}
+            >
+              Current Lists
+            </button>
+            <button
+              onClick={() => setTrashView(true)}
+              className={!trashView ? "button not-selected" : "button"}
+            >
+              Deleted Lists
+            </button>
 
-          
-          {!singleView && !trashView && renderListAdder()}
-          {!singleView && trashView && (
-          <button className="button action clear" onClick={() => clearTrash()}>
-            🗑️
-          </button>
-          )}
-        </div>
+            {!singleView && !trashView && renderListAdder()}
+            {!singleView && trashView && (
+              <button
+                className="button action clear"
+                onClick={() => clearTrash()}
+              >
+                🗑️
+              </button>
+            )}
+          </div>
         </div>
       )}
       <Link to="/" className="exit">
