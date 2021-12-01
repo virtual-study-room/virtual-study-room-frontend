@@ -98,17 +98,16 @@ export default function ImageUpload(props: ImageUploadProps) {
                 {...dragProps}
               ></button>
             ) : (
-              <div
-                key={index}
-                className="image-item"
-                style={{
-                  top: imageCoords[index][0],
-                  left: left,
-                  width: imageSizes[index][0],
-                  height: imageSizes[index][1],
-                  borderRadius: index === 8 ? "60%" : 0,
-                  overflow: "hidden",
-                }}
+              <div key={index} className="image-item"
+                style={
+                  { 
+                    top: imageCoords[index][0],
+                    left: left,
+                    width: imageSizes[index][0],
+                    height: imageSizes[index][1],
+                    borderRadius: index === 8 ? '60%': 0,
+                    overflow: index === 8 ? "hidden" : "inherit"
+                  }}
               >
                 <img className="image" src={image.dataURL} alt="" />
                 {/* <div className="image-item__btn-wrapper"> */}
