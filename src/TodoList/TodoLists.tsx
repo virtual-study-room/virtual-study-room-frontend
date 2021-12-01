@@ -136,7 +136,7 @@ export default function TodoLists() {
 
   const renderListAdder = () => {
     return addingList ? (
-      <div>
+      <div id="adder">
         <input
           className="input"
           type="text"
@@ -146,7 +146,8 @@ export default function TodoLists() {
             if (e.key === "Enter") addList(input);
           }}
         />
-        <button className="button" onClick={() => addList(input)}>
+        <div className="button-container">
+          <button className="button" onClick={() => addList(input)}>
           submit
         </button>
         <button
@@ -155,6 +156,8 @@ export default function TodoLists() {
         >
           cancel
         </button>
+        </div>
+        
       </div>
     ) : (
       <button className="button add" onClick={() => setAddingList(!addingList)}>
@@ -222,9 +225,39 @@ export default function TodoLists() {
     />
   );
 
+ // date stuff
+ const [date, setDate] = useState(new Date());
+
+ useEffect(() => {
+   const timer = setInterval(() => {
+     // update the current date every 15 seconds
+     setDate(new Date());
+   }, 15 * 1000);
+   return () => {
+     clearInterval(timer); // clear the timer so that it will stop being called on unmount
+   };
+ }, []);
+
+ const hour = date.getHours();
+
+ const color = () => {
+   if (hour >= 19 || hour <= 4) return "#90A5C2";
+   if (hour >= 5 && hour <= 6) return "#E59766";
+   if (hour >= 7 && hour <= 16) return "#C1C7A3";
+   return "#E59766";
+ };
+
+
   return (
-    <div className="App">
+    <div className="todolist-page" style={{backgroundColor: color()}}>
+      <div className="list-container">
+        {!singleView && !trashView && renderLists()}
+        {!singleView && trashView && renderTrashedLists()}
+        
+        {singleView && renderSingleView()}
+      </div>
       {!singleView && (
+        <div className="toggle-container">
         <div className="toggle">
           <button
             onClick={() => setTrashView(false)}
@@ -238,20 +271,15 @@ export default function TodoLists() {
           >
             Deleted Lists
           </button>
-        </div>
-      )}
-      <div className="list-container">
-        {!singleView && !trashView && renderLists()}
-        {!singleView && !trashView && renderListAdder()}
-        {!singleView && trashView && renderTrashedLists()}
-        {!singleView && trashView && (
+          {!singleView && !trashView && renderListAdder()}
+          {!singleView && trashView && (
           <button className="button action clear" onClick={() => clearTrash()}>
             🗑️
           </button>
         )}
-        {singleView && renderSingleView()}
-      </div>
-
+        </div>
+        </div>
+      )}
       <Link to="/" className="exit">
         ◀
       </Link>

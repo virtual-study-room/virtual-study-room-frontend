@@ -3,6 +3,10 @@
   src: url("../assets/Storytime.ttf");
 }
 
+.todolist-page {
+  min-height: 100vh;
+}
+
 .close-button {
   font-family: handwriting;
   font-size: 15px;
@@ -27,7 +31,8 @@
   border-radius: 5px;
   margin: 10px 0;
   border: solid 1px #c9cdf5;
-  /* width: 100%; */
+  width: 80%;
+  margin-right: 20px;
 }
 
 .item-add {
@@ -97,11 +102,13 @@ button:hover {
 }
 
 .list-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   width: 100%;
   box-sizing: border-box;
+  padding: 90px;
+  padding-bottom: 0;
   justify-content: center;
-  padding-bottom: 2vw;
 }
 
 .submit-button {
@@ -116,6 +123,12 @@ button:hover {
 
 .cancel {
   background-color: #ff7b76;
+}
+
+.button-container {
+  padding-left: 20px;
+  /* background-color: red; */
+  /* width: ; */
 }
 
 /* checkbox shit */
@@ -192,14 +205,31 @@ button:hover {
 }
 
 .toggle {
-  position: absolute;
+  /* position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.toggle-container {
+  width: 100%;
+  display: flex;
+
+  justify-content: center;
+  /* background-color: red; */
+}
+
+#adder {
+  margin-left: 20px;
 }
 
 .add {
   padding: 5px;
+  margin: 0 !important;
   width: 40px;
   height: 40px;
   align-self: center;
@@ -209,6 +239,8 @@ button:hover {
 
 .restore {
   font-size: 20px;
+  /* background-color: red; */
+  width: 80%;
 }
 
 .trash-list {
@@ -234,7 +266,7 @@ button:hover {
   );
   /* background-position-y: 34px; */
   /* height: 300px; */
-  width: 500px;
+  width: 80vw;
   padding: 20px 50px;
   border-radius: 5px;
   /* margin-top: 50px;
