@@ -13,7 +13,7 @@ import "./sky.css";
 import { AuthContext } from "../auth/AuthContext";
 
 export default function Sky() {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [date, setDate] = useState(new Date());
   const lastLogged = user?.login;
 
@@ -28,15 +28,18 @@ export default function Sky() {
   }, []);
 
   const hour = date.getHours();
-  if(!lastLogged){
+  if (!lastLogged) {
     console.error("internal error");
-    return <img
-    id="base"
-    src={daybig}
-    alt="the color of the sky, which changes based on the hour"
-  />
+    return (
+      <img
+        id="base"
+        src={daybig}
+        alt="the color of the sky, which changes based on the hour"
+      />
+    );
   }
-  var days = (date.getTime() - new Date(lastLogged).getTime()) / (1000 * 3600 * 24);
+  var days =
+    (date.getTime() - new Date(lastLogged).getTime()) / (1000 * 3600 * 24);
 
   const image = () => {
     console.log(days);
