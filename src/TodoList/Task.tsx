@@ -23,6 +23,7 @@ export default function Task(props: TaskProps) {
       <button
         className="close-button list-close"
         onClick={() => props.remove(props.index)}
+        style={{ position: "relative", top: "-2.5px" }}
       >
         X
       </button>
