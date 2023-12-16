@@ -2,7 +2,7 @@
 
 Welcome to the Study Room! This is a virtual environment with different tools to help you study:
 
-![](images/virtual-study-room.jpg)
+![]("virtual study room.jpg")
 
 
 * ASMR Audio: Use the sliders to perfect your study space ambient noise. Options range from upbeat music to soothing rain.
