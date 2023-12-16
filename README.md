@@ -1,6 +1,10 @@
 # Study Room
 
 Welcome to the Study Room! This is a virtual environment with different tools to help you study:
+
+![](images/virtual-study-room.jpg)
+
+
 * ASMR Audio: Use the sliders to perfect your study space ambient noise. Options range from upbeat music to soothing rain.
 * Time of Day: The color of the room reflects the time of day you log on. There is a night, day, and sunrise/sunset mode.
 * Timer: Based on the Pomodoro method, you can set up a timer that tells you when to study and when to take a break.
